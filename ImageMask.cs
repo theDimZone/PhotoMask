@@ -16,7 +16,7 @@ namespace photomask
     public enum Method
     {
         None,
-        Standart,
+        Normal,
         Jackal,
         Sum,
         Subtraction,

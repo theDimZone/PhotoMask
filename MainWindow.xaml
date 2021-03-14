@@ -24,8 +24,8 @@
         </Rectangle>
         <Image x:Name="imageMain" Grid.RowSpan="2" Grid.ColumnSpan="2" />
         <GridSplitter x:Name="gridSplitter" Width="2" Background="#FF9E9E9E" Grid.RowSpan="2" IsEnabled="False" Grid.Column="2" HorizontalAlignment="Left" />
-        <Button x:Name="buttonUpload" Content="Добавить изображение" Grid.Column="2" VerticalAlignment="Top" Margin="10,35,10,0" Click="buttonUpload_Click" />
-        <Button x:Name="buttonSave" Content="Сохранить результат" Grid.Column="2" VerticalAlignment="Top" Margin="10,10,10,0" IsEnabled="False" Click="buttonSave_Click" />
+        <Button x:Name="buttonUpload" Content="Add image" Grid.Column="2" VerticalAlignment="Top" Margin="10,35,10,0" Click="buttonUpload_Click" />
+        <Button x:Name="buttonSave" Content="Save result" Grid.Column="2" VerticalAlignment="Top" Margin="10,10,10,0" IsEnabled="False" Click="buttonSave_Click" />
         <GridSplitter x:Name="gridSplitter1" Background="#FF9E9E9E" Grid.Column="2" HorizontalAlignment="Stretch" Height="2"  Grid.Row="1" VerticalAlignment="Top" IsEnabled="False"/>
 
         <ScrollViewer x:Name="Scroll" Grid.Column="2"  Grid.Row="1" HorizontalScrollBarVisibility="Hidden"  Margin="0,2,0,0">
@@ -53,46 +53,46 @@
                             <Button x:Name="buttonRemove" Content="✖" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="10,80,5,0" Click="buttonRemove_Click" />
 
 
-                            <Label Grid.Row="1" Grid.ColumnSpan="2" x:Name="label" Content="Прозрачность:" Height="Auto" Width="Auto" HorizontalAlignment="Left" Margin="0,5,0,0" VerticalAlignment="Center" />
-                            <Slider Grid.Row="1" Grid.ColumnSpan="2" x:Name="sliderOpacity" Value="{Binding opacity}" Minimum="0" Maximum="100" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,7,27,0" Height="Auto" Width="115" IsSelectionRangeEnabled="True" PreviewMouseUp="slider_Click" />
+                            <Label Grid.Row="1" Grid.ColumnSpan="2" x:Name="label" Content="Opacity:" Height="Auto" Width="Auto" HorizontalAlignment="Left" Margin="0,5,0,0" VerticalAlignment="Center" />
+                            <Slider Grid.Row="1" Grid.ColumnSpan="2" x:Name="sliderOpacity" Value="{Binding opacity}" Minimum="0" Maximum="100" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,7,27,0" Height="Auto" Width="160" IsSelectionRangeEnabled="True" PreviewMouseUp="slider_Click" />
                             <Label Grid.Row="1" Grid.ColumnSpan="2" x:Name="label1" Content="{Binding opacity}" HorizontalAlignment="Right" VerticalAlignment="Center" Height="Auto" Width="Auto" Margin="0,5,0,0" />
 
 
-                            <Label Grid.Row="2" Grid.ColumnSpan="2" x:Name="label2" Content="Метод:" Height="Auto" Width="Auto" HorizontalAlignment="Left" Margin="0,5,0,0" VerticalAlignment="Center" />
+                            <Label Grid.Row="2" Grid.ColumnSpan="2" x:Name="label2" Content="Mode:" Height="Auto" Width="Auto" HorizontalAlignment="Left" Margin="0,5,0,0" VerticalAlignment="Center" />
                             <ComboBox Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,5,0" Height="Auto" Width="180" SelectedIndex="{Binding method_view}">
                                 <!-- Order should be same as in Method enum-->
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Нет</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Стандартный</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Шакаливание</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Сумма</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Разность</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Умножение</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Деление</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Экран</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Разница</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Перекрытие</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Исключение</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Мягкий свет</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Жесткий свет</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Яркий свет</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Линейный свет</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Точечный свет</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Жесткое смешение</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Замена тёмным</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Замена светлым</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Осветление основы</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Затемнение основы</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Линейный затемнитель</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">None</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Normal</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Jackal</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Addition (Linear Dodge)</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Substract</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Multiply</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Divide</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Screen</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Difference</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Overlay</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Exclusion</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Soft Light</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Hard Light</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Vivid Light</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Linear Light</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Pin Light</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Hard Mix</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Darken Only</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Lighten Only</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Color Dodge</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Color Burn</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Linear Burn</ComboBoxItem>
                             </ComboBox>
 
-                            <Label Grid.Row="3" Grid.Column="0" x:Name="label3" Content="Размер:" Height="Auto" Width="60" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Center" />
+                            <Label Grid.Row="3" Grid.Column="0" x:Name="label3" Content="Size:" Height="Auto" Width="60" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Center" />
                             <TextBox x:Name="textBoxWidth" Grid.Column="0" HorizontalAlignment="Left" Margin="58, 10, 0, 0" Grid.Row="3" Text="{Binding width_view, Mode=OneWay}" TextWrapping="Wrap" VerticalAlignment="Center" Width="50" KeyUp="maskWidth_Changed" />
                             <TextBox x:Name="textBoxHeight" Grid.Column="0" HorizontalAlignment="Left" Margin="115, 10, 0, 0" Grid.Row="3" Text="{Binding height_view, Mode=OneWay}" TextWrapping="Wrap" VerticalAlignment="Center" Width="50" KeyUp="maskHeight_Changed" />
                             <Button x:Name="buttonResize" Content="➞" Grid.Column="0" HorizontalAlignment="Left" Margin="172, 10, 0, 0" Grid.Row="3"  VerticalAlignment="Center"  Click="buttonResize_Click" />
 
-                            <CheckBox x:Name="checkBoxKeepAspect" Content="Сохранить соотношение сторон" IsChecked="{Binding keepAspectRatio}" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="5,5,0,0" Grid.Row="4" VerticalAlignment="Top"/>
+                            <CheckBox x:Name="checkBoxKeepAspect" Content="Save aspect ratio" IsChecked="{Binding keepAspectRatio}" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="5,5,0,0" Grid.Row="4" VerticalAlignment="Top"/>
 
-                            <Button x:Name="buttonResizeOriginal" Content="Вернуть оригинальный размер" Grid.Column="0" Grid.ColumnSpan="2" Margin="5, 10, 5, 0" Grid.Row="5" Click="buttonResizeOriginal_Click" />
+                            <Button x:Name="buttonResizeOriginal" Content="Return original size" Grid.Column="0" Grid.ColumnSpan="2" Margin="5, 10, 5, 0" Grid.Row="5" Click="buttonResizeOriginal_Click" />
 
                             <GridSplitter x:Name="gridSplitter2" Background="#FF9E9E9E" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="2" Grid.Row="6"  IsEnabled="False"/>
 
@@ -103,12 +103,12 @@
         </ScrollViewer>
         <StatusBar Grid.Row="2" Grid.ColumnSpan="3" VerticalAlignment="Stretch">
             <StatusBarItem HorizontalAlignment="Center">
-                <TextBlock Text="Обработал изображение за" />
+                <TextBlock Text="Processing took" />
             </StatusBarItem>
             <StatusBarItem HorizontalAlignment="Center">
                 <TextBlock Name="textTime" Text="0" />
             </StatusBarItem>
-            <TextBlock Text="мс" />
+            <TextBlock Text="ms" />
 
         </StatusBar>
     </Grid>

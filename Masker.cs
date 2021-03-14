@@ -39,7 +39,7 @@ namespace photomask
             BlendMethods[Method.Overlay] = Overlay;
             BlendMethods[Method.Exclusion] = Exclusion;
             BlendMethods[Method.Screen] = Screen;
-            BlendMethods[Method.Standart] = Standart;
+            BlendMethods[Method.Normal] = Normal;
             BlendMethods[Method.Subtraction] = Subtraction;
             BlendMethods[Method.Sum] = Sum;
             BlendMethods[Method.SoftLight] = SoftLight;
@@ -84,7 +84,7 @@ namespace photomask
         private int Sum(int a, int b) => Util.Clamp(a + b, 0, 255); // same as linear dodge
         private int Multiply(int a, int b) => a * b / 255;
         private int Divide(int a, int b) => b == 0 ? 255 : Util.Clamp((int)(a / 255.0f / (b / 255.0f) * 255), 0, 255);
-        private int Standart(int a, int b) => b;
+        private int Normal(int a, int b) => b;
         private int Jackal(int a, int b) => (255 - 2 * b) * a * a / 255; // шакаливание WIP
         private int SoftLight(int a, int b) => (255 - 2 * b) * a * a / 65025 + 2 * b * a / 255;
         private int HardLight(int a, int b) => Overlay(b, a);
