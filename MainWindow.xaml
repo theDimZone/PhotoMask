@@ -1,0 +1,116 @@
+﻿<Window x:Class="photomask.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:photomask" xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
+        mc:Ignorable="d"
+        Title="PhotoMask" Height="720" Width="1280" SizeToContent="Manual" MinWidth="1280" MinHeight="720" ResizeMode="CanResizeWithGrip" WindowState="Normal">
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="97*"/>
+            <ColumnDefinition Width="260"/>
+        </Grid.ColumnDefinitions>
+        <Rectangle x:Name="rectangleBackground" Stroke="Black"  Grid.RowSpan="2" Grid.ColumnSpan="2" StrokeThickness="0" Panel.ZIndex="-1">
+            <Rectangle.Fill>
+                <ImageBrush TileMode="Tile" ImageSource="/chess.png" ViewportUnits="Absolute" Viewport="0,0,75,75"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Image x:Name="imageMain" Grid.RowSpan="2" Grid.ColumnSpan="2" />
+        <GridSplitter x:Name="gridSplitter" Width="2" Background="#FF9E9E9E" Grid.RowSpan="2" IsEnabled="False" Grid.Column="2" HorizontalAlignment="Left" />
+        <Button x:Name="buttonUpload" Content="Добавить изображение" Grid.Column="2" VerticalAlignment="Top" Margin="10,35,10,0" Click="buttonUpload_Click" />
+        <Button x:Name="buttonSave" Content="Сохранить результат" Grid.Column="2" VerticalAlignment="Top" Margin="10,10,10,0" IsEnabled="False" Click="buttonSave_Click" />
+        <GridSplitter x:Name="gridSplitter1" Background="#FF9E9E9E" Grid.Column="2" HorizontalAlignment="Stretch" Height="2"  Grid.Row="1" VerticalAlignment="Top" IsEnabled="False"/>
+
+        <ScrollViewer x:Name="Scroll" Grid.Column="2"  Grid.Row="1" HorizontalScrollBarVisibility="Hidden"  Margin="0,2,0,0">
+            <ItemsControl x:Name="itemsControl">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="0.2*"/>
+                                <RowDefinition Height="0.2*"/>
+                                <RowDefinition Height="0.2*"/>
+                                <RowDefinition Height="0.2*"/>
+                                <RowDefinition Height="0.2*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <Image Grid.Column="0" Grid.Row="0" x:Name="image" Margin="5, 10, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Source="{Binding ImageSource}" />
+                            <Button x:Name="buttonUp" Content="▲" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="10,-65,5,0" Click="buttonUp_Click" />
+                            <Button x:Name="buttonDown" Content="▼" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="10,-15,5,0"  Click="buttonDown_Click" />
+                            <Button x:Name="buttonRemove" Content="✖" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="10,80,5,0" Click="buttonRemove_Click" />
+
+
+                            <Label Grid.Row="1" Grid.ColumnSpan="2" x:Name="label" Content="Прозрачность:" Height="Auto" Width="Auto" HorizontalAlignment="Left" Margin="0,5,0,0" VerticalAlignment="Center" />
+                            <Slider Grid.Row="1" Grid.ColumnSpan="2" x:Name="sliderOpacity" Value="{Binding opacity}" Minimum="0" Maximum="100" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,7,27,0" Height="Auto" Width="115" IsSelectionRangeEnabled="True" PreviewMouseUp="slider_Click" />
+                            <Label Grid.Row="1" Grid.ColumnSpan="2" x:Name="label1" Content="{Binding opacity}" HorizontalAlignment="Right" VerticalAlignment="Center" Height="Auto" Width="Auto" Margin="0,5,0,0" />
+
+
+                            <Label Grid.Row="2" Grid.ColumnSpan="2" x:Name="label2" Content="Метод:" Height="Auto" Width="Auto" HorizontalAlignment="Left" Margin="0,5,0,0" VerticalAlignment="Center" />
+                            <ComboBox Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,5,0" Height="Auto" Width="180" SelectedIndex="{Binding method_view}">
+                                <!-- Order should be same as in Method enum-->
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Нет</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Стандартный</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Шакаливание</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Сумма</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Разность</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Умножение</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Деление</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Экран</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Разница</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Перекрытие</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Исключение</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Мягкий свет</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Жесткий свет</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Яркий свет</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Линейный свет</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Точечный свет</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Жесткое смешение</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Замена тёмным</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Замена светлым</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Осветление основы</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Затемнение основы</ComboBoxItem>
+                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Линейный затемнитель</ComboBoxItem>
+                            </ComboBox>
+
+                            <Label Grid.Row="3" Grid.Column="0" x:Name="label3" Content="Размер:" Height="Auto" Width="60" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Center" />
+                            <TextBox x:Name="textBoxWidth" Grid.Column="0" HorizontalAlignment="Left" Margin="58, 10, 0, 0" Grid.Row="3" Text="{Binding width_view, Mode=OneWay}" TextWrapping="Wrap" VerticalAlignment="Center" Width="50" KeyUp="maskWidth_Changed" />
+                            <TextBox x:Name="textBoxHeight" Grid.Column="0" HorizontalAlignment="Left" Margin="115, 10, 0, 0" Grid.Row="3" Text="{Binding height_view, Mode=OneWay}" TextWrapping="Wrap" VerticalAlignment="Center" Width="50" KeyUp="maskHeight_Changed" />
+                            <Button x:Name="buttonResize" Content="➞" Grid.Column="0" HorizontalAlignment="Left" Margin="172, 10, 0, 0" Grid.Row="3"  VerticalAlignment="Center"  Click="buttonResize_Click" />
+
+                            <CheckBox x:Name="checkBoxKeepAspect" Content="Сохранить соотношение сторон" IsChecked="{Binding keepAspectRatio}" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="5,5,0,0" Grid.Row="4" VerticalAlignment="Top"/>
+
+                            <Button x:Name="buttonResizeOriginal" Content="Вернуть оригинальный размер" Grid.Column="0" Grid.ColumnSpan="2" Margin="5, 10, 5, 0" Grid.Row="5" Click="buttonResizeOriginal_Click" />
+
+                            <GridSplitter x:Name="gridSplitter2" Background="#FF9E9E9E" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="2" Grid.Row="6"  IsEnabled="False"/>
+
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+        <StatusBar Grid.Row="2" Grid.ColumnSpan="3" VerticalAlignment="Stretch">
+            <StatusBarItem HorizontalAlignment="Center">
+                <TextBlock Text="Обработал изображение за" />
+            </StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Center">
+                <TextBlock Name="textTime" Text="0" />
+            </StatusBarItem>
+            <TextBlock Text="мс" />
+
+        </StatusBar>
+    </Grid>
+
+</Window>
