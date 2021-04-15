@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Media.Imaging;
 using System.IO;
+using System.Drawing.Imaging;
 
 namespace photomask
 {
@@ -20,22 +21,24 @@ namespace photomask
 
     public static class Util
     {
-        public static BitmapImage GetImageSource(Bitmap bitmap)
+        // https://stackoverflow.com/questions/1546091/wpf-createbitmapsourcefromhbitmap-memory-leak
+        [System.Runtime.InteropServices.DllImport("gdi32.dll")]
+        public static extern bool DeleteObject(IntPtr hObject);
+
+        public static BitmapSource GetImageSource(Bitmap bitmap)
         {
             if (bitmap == null) return null;
 
-            using MemoryStream memory = new MemoryStream();
+            var hBitmap = bitmap.GetHbitmap();
+            var result = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
+                hBitmap, 
+                IntPtr.Zero, 
+                System.Windows.Int32Rect.Empty, 
+                System.Windows.Media.Imaging.BitmapSizeOptions.FromEmptyOptions());
 
-            bitmap.Save(memory, System.Drawing.Imaging.ImageFormat.Png);
-            memory.Position = 0;
-            BitmapImage bitmapimage = new BitmapImage();
-            bitmapimage.BeginInit();
-            bitmapimage.StreamSource = memory;
-            bitmapimage.CacheOption = BitmapCacheOption.OnLoad;
-            bitmapimage.EndInit();
+            DeleteObject(hBitmap);
 
-            return bitmapimage;
-            
+            return result;
         }
 
         public static T Clamp<T>(T val, T min, T max) where T : IComparable<T>

@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Windows.Media.Imaging;
-using System.IO;
-using System.Collections.ObjectModel;
 using System.Drawing.Imaging;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
+using photomask.Image;
 
 namespace photomask
 {
@@ -21,39 +17,40 @@ namespace photomask
     public class Masker
     {
         private Bitmap ResultImage { get; set; }
+        //private List<Img> PrevOperationMasks { get; set; } = new List<Img>();
 
         private delegate int BlendMethod(int a, int b);
 
-        private Dictionary<Method, BlendMethod> BlendMethods = new Dictionary<Method, BlendMethod>();
+        private Dictionary<BlendMode, BlendMethod> BlendMethods { get; set; } = new Dictionary<BlendMode, BlendMethod>();
 
-        public BitmapImage ImageSource
+        public BitmapSource ImageSource
         {
             get => Util.GetImageSource(ResultImage);
         }
 
         public Masker()
         {
-            BlendMethods[Method.Diff] = Diff;
-            BlendMethods[Method.Multiply] = Multiply;
-            BlendMethods[Method.Divide] = Divide;
-            BlendMethods[Method.Overlay] = Overlay;
-            BlendMethods[Method.Exclusion] = Exclusion;
-            BlendMethods[Method.Screen] = Screen;
-            BlendMethods[Method.Normal] = Normal;
-            BlendMethods[Method.Subtraction] = Subtraction;
-            BlendMethods[Method.Sum] = Sum;
-            BlendMethods[Method.SoftLight] = SoftLight;
-            BlendMethods[Method.HardLight] = HardLight;
-            BlendMethods[Method.VividLight] = VividLight;
-            BlendMethods[Method.LinearLight] = LinearLight;
-            BlendMethods[Method.PinLight] = PinLight;
-            BlendMethods[Method.Jackal] = Jackal;
-            BlendMethods[Method.HardMix] = HardMix;
-            BlendMethods[Method.DarkenOnly] = DarkenOnly;
-            BlendMethods[Method.LightenOnly] = LightenOnly;
-            BlendMethods[Method.ColorDodge] = ColorDodge;
-            BlendMethods[Method.ColorBurn] = ColorBurn;
-            BlendMethods[Method.LinearBurn] = LinearBurn;
+            BlendMethods[BlendMode.Diff] = Diff;
+            BlendMethods[BlendMode.Multiply] = Multiply;
+            BlendMethods[BlendMode.Divide] = Divide;
+            BlendMethods[BlendMode.Overlay] = Overlay;
+            BlendMethods[BlendMode.Exclusion] = Exclusion;
+            BlendMethods[BlendMode.Screen] = Screen;
+            BlendMethods[BlendMode.Normal] = Normal;
+            BlendMethods[BlendMode.Subtraction] = Subtraction;
+            BlendMethods[BlendMode.Sum] = Sum;
+            BlendMethods[BlendMode.SoftLight] = SoftLight;
+            BlendMethods[BlendMode.HardLight] = HardLight;
+            BlendMethods[BlendMode.VividLight] = VividLight;
+            BlendMethods[BlendMode.LinearLight] = LinearLight;
+            BlendMethods[BlendMode.PinLight] = PinLight;
+            BlendMethods[BlendMode.Jackal] = Jackal;
+            BlendMethods[BlendMode.HardMix] = HardMix;
+            BlendMethods[BlendMode.DarkenOnly] = DarkenOnly;
+            BlendMethods[BlendMode.LightenOnly] = LightenOnly;
+            BlendMethods[BlendMode.ColorDodge] = ColorDodge;
+            BlendMethods[BlendMode.ColorBurn] = ColorBurn;
+            BlendMethods[BlendMode.LinearBurn] = LinearBurn;
         }
 
         ~Masker()
@@ -99,10 +96,10 @@ namespace photomask
         private int ColorBurn(int a, int b) => 255 - Divide(255 - a, b);
         
 
-        public void Blend(IList<ImageMask> images)
+        public void Blend(IList<Img> images)
         {  
-            List<ImageMask> masks = images.Clone() as List<ImageMask>;
-            masks.RemoveAll(m => m.method == Method.None);
+            List<Img> masks = images.Clone() as List<Img>;
+            masks.RemoveAll(m => m.blend_data.mode == BlendMode.None);
 
             ClearResult();
             if (masks.Count() == 0) return;
@@ -110,8 +107,18 @@ namespace photomask
             BlendMethod currentMethod;
             for (var i = masks.Count() - 1; i >= 1; i--)
             {
-                ImageMask mask_top = masks[i];
-                ImageMask mask_bottom = masks[i - 1];
+                Img mask_top = masks[i];
+                Img mask_bottom = masks[i - 1];
+
+                // skip if nothing is changed
+                /* WIP
+                if (PrevOperationMasks.Count() == masks.Count() && PrevOperationMasks[i].Equals(mask_top) && PrevOperationMasks[i - 1].Equals(mask_bottom))
+                {
+                    //masks[i - 1] = PrevOperationMasks[i - 1].Clone() as ImageMask;
+                    masks[i - 1].pixels_matrix = PrevOperationMasks[i - 1].pixels_matrix.Clone() as Pixel[,];
+                    continue;
+                }
+                */
 
                 int min_h = mask_top.height > mask_bottom.height ? mask_bottom.height : mask_top.height;
                 int min_w = mask_top.width > mask_bottom.width ? mask_bottom.width : mask_top.width;
@@ -143,11 +150,11 @@ namespace photomask
                     y_bottom_offset = h_offset;
                 }
 
-                currentMethod = BlendMethods[mask_top.method];
+                currentMethod = BlendMethods[mask_top.blend_data.mode];
 
-                for (int x = 0; x < min_w; x++)
+                Parallel.For(0, min_w, x =>
                 {
-                    for(int y = 0; y < min_h; y++)
+                    for (int y = 0; y < min_h; y++)
                     {
                         int x_top = x + x_top_offset;
                         int x_bottom = x + x_bottom_offset;
@@ -161,7 +168,7 @@ namespace photomask
                         int G_top = currentMethod(pix_bottom.G, pix_top.G);
                         int B_top = currentMethod(pix_bottom.B, pix_top.B);
 
-                        int alpha = (int)((mask_top.opacity / 100.0f) * (pix_top.A / 255.0f) * 255);
+                        int alpha = (int)((mask_top.blend_data.opacity / 100.0f) * (pix_top.A / 255.0f) * 255);
 
                         int R_bottom = AlphaBlend(pix_bottom.R, R_top, alpha);
                         int G_bottom = AlphaBlend(pix_bottom.G, G_top, alpha);
@@ -171,8 +178,11 @@ namespace photomask
 
                         masks[i - 1].pixels_matrix[x_bottom, y_bottom] = new Pixel(new_alpha, R_bottom, G_bottom, B_bottom);
                     }
-                }
+                });
             }
+
+            // mb doesnt need clone
+            //PrevOperationMasks = masks.Clone() as List<Img>;
 
             // write result
             int w = masks[0].width;
@@ -184,12 +194,12 @@ namespace photomask
             BitmapData bitmapData = ResultImage.LockBits(rect, ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
             IntPtr Iptr = bitmapData.Scan0;
 
-            for (int x = 0; x < w; x++)
+            Parallel.For(0, w, x =>
             {
                 for (int y = 0; y < h; y++)
                 {
                     Pixel pix = masks[0].pixels_matrix[x, y];
-                    byte A = (byte)((masks[0].opacity / 100.0f) * (pix.A / 255.0f) * 255);
+                    byte A = (byte)((masks[0].blend_data.opacity / 100.0f) * (pix.A / 255.0f) * 255);
 
                     int offset = ((y * w) + x) * 4;
                     colors[offset] = pix.B;
@@ -197,8 +207,7 @@ namespace photomask
                     colors[offset + 2] = pix.R;
                     colors[offset + 3] = A;
                 }
-            }
-
+            });
             Marshal.Copy(colors, 0, Iptr, colors.Length);
             ResultImage.UnlockBits(bitmapData);
             
@@ -206,7 +215,7 @@ namespace photomask
 
         public void Save(string path)
         {
-            if (ResultImage == null) throw new Exception("Result image is null. You need to call BlendMasks(...)");
+            if (ResultImage == null) throw new Exception("Result image is null. You need to call Blend(...)");
             ResultImage.Save(path);
         }
     }

@@ -15,7 +15,6 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="chess.png" />
-    <None Remove="chessboard.gif" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
@@ -24,7 +23,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="chess.png" />
-    <Resource Include="chessboard.gif" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Properties\Settings.Designer.cs">

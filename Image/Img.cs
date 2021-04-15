@@ -1,49 +1,51 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.IO;
 using System.Windows.Media.Imaging;
 using System.Drawing.Imaging;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
-namespace photomask
+namespace photomask.Image
 {
-    public enum Method
-    {
-        None,
-        Normal,
-        Jackal,
-        Sum,
-        Subtraction,
-        Multiply,
-        Divide,
-        Screen,
-        Diff,
-        Overlay,
-        Exclusion,
-        SoftLight,
-        HardLight,
-        VividLight,
-        LinearLight,
-        PinLight,
-        HardMix,
-        DarkenOnly,
-        LightenOnly,
-        ColorDodge,
-        ColorBurn,
-        LinearBurn
-    }
 
-    public class ImageMask : ICloneable
+    public class Img : ICloneable
     {
         private Bitmap bitmap { get; set; }
+        //private long Id { get; set; }
+        public BlendData blend_data { get; private set; } = new BlendData();
+        public Pixel[,] pixels_matrix { get; set; }
+        public bool keep_aspect_ratio { get; set; } = true;
 
         private int _height;
+        private int _width;
+
+        private int _width_view;
+        private int _height_view;
+
+        public Img(string path)
+        {
+            bitmap = new Bitmap(path);
+            //Id = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+
+            width = bitmap.Width;
+            height = bitmap.Height;
+
+            SetPixelsMatrix(bitmap);
+        }
+
+        public Img() { }
+
+        ~Img()
+        {
+            bitmap?.Dispose();
+        }
+
+        public BitmapSource ImageSource
+        {
+            get => Util.GetImageSource(bitmap);
+        }
+
         public int height
         {
             get => _height;
@@ -53,7 +55,6 @@ namespace photomask
                 _height = value;
             }
         }
-        private int _width;
         public int width {
             get => _width;
             private set
@@ -62,26 +63,12 @@ namespace photomask
                 _width = value;
             }
         }
-        public Pixel[,] pixels_matrix { get; private set; }
-        public int opacity { get; set; } = 100; 
-        public Method method { get; set; } = Method.None;
-        
-        public int method_view
-        {
-            get => (int)method;
-            set => method = (Method)value;
-        }
-
-        public bool keepAspectRatio { get; set; } = true;
-
-        private int _width_view;
-        private int _height_view;
         public int width_view
         {
             get => _width_view;
             set
             {
-                if (keepAspectRatio)
+                if (keep_aspect_ratio)
                 {
                     float ratio = (float)width / (float)height;
                     _height_view = (int)Math.Round(value / ratio);
@@ -95,7 +82,7 @@ namespace photomask
             get => _height_view;
             set
             {
-                if (keepAspectRatio)
+                if (keep_aspect_ratio)
                 {
                     float ratio = (float)width / (float)height;
                     _width_view = (int)Math.Round(value * ratio);
@@ -104,39 +91,29 @@ namespace photomask
             }
         }
 
-
-        public BitmapImage ImageSource {
-            get => Util.GetImageSource(bitmap);
-        }
-
-        public ImageMask(string path)
-        {
-            bitmap = new Bitmap(path);
-
-            width = bitmap.Width;
-            height = bitmap.Height;
-           
-            SetPixelsMatrix(bitmap);
-        }
-
-        public ImageMask() { }
-
-        ~ImageMask()
-        {
-            bitmap?.Dispose();
-        }
-
         // Cloning with missing this.bitmap 
         public object Clone()
         {
-            ImageMask mask = new ImageMask();
-            mask.opacity = opacity;
-            mask.method = method;
+            Img mask = new Img();
+            //mask.Id = Id;
+            mask.blend_data = blend_data.Clone() as BlendData;
             mask.width = width;
             mask.height = height;
             mask.pixels_matrix = pixels_matrix.Clone() as Pixel[,];
             return mask;
         }
+
+        // WIP
+        /*
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+                return false;
+
+            Img another = obj as Img;
+            return (another.Id == Id) && (another.method == method) && (another.width == width) && (another.height == height) && (another.opacity == opacity);
+        }
+        */
 
         public void Resize(int w, int h)
         {
@@ -179,6 +156,8 @@ namespace photomask
             BitmapData bitmapData = image.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
             IntPtr Iptr = bitmapData.Scan0;
             Marshal.Copy(Iptr, colors, 0, colors.Length);
+            
+            /*
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
@@ -187,6 +166,16 @@ namespace photomask
                     pixels_matrix[x, y] = new Pixel(colors[offset + 3], colors[offset + 2], colors[offset + 1], colors[offset]);
                 }
             }
+            */
+
+            Parallel.For(0, width, x =>
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    int offset = ((y * width) + x) * 4;
+                    pixels_matrix[x, y] = new Pixel(colors[offset + 3], colors[offset + 2], colors[offset + 1], colors[offset]);
+                }
+            });
             image.UnlockBits(bitmapData);
 
         }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using photomask.Image;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -15,7 +16,7 @@ namespace photomask
     public partial class MainWindow : Window
     {
         public Masker masker = new Masker();
-        public ObservableCollection<ImageMask> images = new ObservableCollection<ImageMask>();
+        public ObservableCollection<Img> images = new ObservableCollection<Img>();
 
         public MainWindow()
         {
@@ -31,7 +32,7 @@ namespace photomask
 
             if (openFileDialog.ShowDialog() == true)
             {
-                ImageMask mask = new ImageMask(openFileDialog.FileName);
+                Img mask = new Img(openFileDialog.FileName);
                 images.Add(mask);
 
                 Scroll.ScrollToEnd();
@@ -54,7 +55,7 @@ namespace photomask
         private void buttonDown_Click(object sender, RoutedEventArgs e)
         {
             Button but = sender as Button;
-            ImageMask mask = but.DataContext as ImageMask;
+            Img mask = but.DataContext as Img;
             int index = images.IndexOf(mask);
 
             if(index < images.Count() - 1)
@@ -68,7 +69,7 @@ namespace photomask
         private void buttonUp_Click(object sender, RoutedEventArgs e)
         {
             Button but = sender as Button;
-            ImageMask mask = but.DataContext as ImageMask;
+            Img mask = but.DataContext as Img;
             int index = images.IndexOf(mask);
 
             if (index > 0 && images.Count() >= 2)
@@ -82,7 +83,7 @@ namespace photomask
         private void buttonRemove_Click(object sender, RoutedEventArgs e)
         {
             Button but = sender as Button;
-            ImageMask mask = but.DataContext as ImageMask;
+            Img mask = but.DataContext as Img;
 
             images.Remove(mask);
             
@@ -95,10 +96,10 @@ namespace photomask
             ComboBoxItem item = sender as ComboBoxItem;
             ComboBox box = item.Parent as ComboBox;
 
-            int method_index = box.Items.IndexOf(item);
+            int mode_index = box.Items.IndexOf(item);
 
-            ImageMask mask = box.DataContext as ImageMask;
-            mask.method_view = method_index;
+            Img mask = box.DataContext as Img;
+            mask.blend_data.mode_view = mode_index;
 
             Remask();
         }
@@ -112,7 +113,7 @@ namespace photomask
         private void maskWidth_Changed(object sender, RoutedEventArgs e)
         {
             TextBox box = sender as TextBox;
-            ImageMask mask = box.DataContext as ImageMask;
+            Img mask = box.DataContext as Img;
 
             if(Util.isNatural(box.Text))
             {
@@ -128,7 +129,7 @@ namespace photomask
         private void maskHeight_Changed(object sender, RoutedEventArgs e)
         {
             TextBox box = sender as TextBox;
-            ImageMask mask = box.DataContext as ImageMask;
+            Img mask = box.DataContext as Img;
 
             if (Util.isNatural(box.Text))
             {
@@ -143,7 +144,7 @@ namespace photomask
         private void buttonResize_Click(object sender, RoutedEventArgs e)
         {
             Button but = sender as Button;
-            ImageMask mask = but.DataContext as ImageMask;
+            Img mask = but.DataContext as Img;
             mask.Resize(mask.width_view, mask.height_view);
             Remask();
         }
@@ -151,7 +152,7 @@ namespace photomask
         private void buttonResizeOriginal_Click(object sender, RoutedEventArgs e)
         {
             Button but = sender as Button;
-            ImageMask mask = but.DataContext as ImageMask;
+            Img mask = but.DataContext as Img;
             mask.ResizeToOriginal();
             
             Grid grid = but.Parent as Grid;
@@ -173,6 +174,7 @@ namespace photomask
             textTime.Text = Math.Round((time2 - time1).TotalMilliseconds).ToString();
 
             imageMain.Source = masker.ImageSource;
+
             buttonSave.IsEnabled = imageMain.Source == null ? false : true;
         }
     }
