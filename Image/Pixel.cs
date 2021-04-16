@@ -1,4 +1,4 @@
-﻿namespace photomask
+﻿namespace photomask.Image
 {
     public struct Pixel
     {

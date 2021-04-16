@@ -1,34 +1,21 @@
-﻿using System;
+﻿using photomask.Image;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Drawing;
-using System.Windows.Media.Imaging;
-using System.Drawing.Imaging;
-using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading.Tasks;
-using photomask.Image;
 
-namespace photomask
+namespace photomask.Actions
 {
-    /// <summary>
-    /// API Class for doing masking of ImageMask objects
-    /// TODO: optimize more
-    /// </summary>
-    public class Masker
+    public class BlendAction : IAction
     {
-        private Bitmap ResultImage { get; set; }
-        //private List<Img> PrevOperationMasks { get; set; } = new List<Img>();
+        public IAction next_action { get; set; }
 
         private delegate int BlendMethod(int a, int b);
 
         private Dictionary<BlendMode, BlendMethod> BlendMethods { get; set; } = new Dictionary<BlendMode, BlendMethod>();
 
-        public BitmapSource ImageSource
-        {
-            get => Util.GetImageSource(ResultImage);
-        }
-
-        public Masker()
+        public BlendAction()
         {
             BlendMethods[BlendMode.Diff] = Diff;
             BlendMethods[BlendMode.Multiply] = Multiply;
@@ -53,17 +40,6 @@ namespace photomask
             BlendMethods[BlendMode.LinearBurn] = LinearBurn;
         }
 
-        ~Masker()
-        {
-            ClearResult();
-        }
-
-        private void ClearResult()
-        {
-            ResultImage?.Dispose();
-            ResultImage = null;
-        }
-  
         private int AlphaBlend(int a, int b, int alpha)
         {
             //float offset = (1.0f - alpha / 255.0f) * (a - b);
@@ -94,16 +70,9 @@ namespace photomask
         private int ColorDodge(int a, int b) => Divide(a, 255 - b);
         private int LinearBurn(int a, int b) => Util.Clamp(a + b - 255, 0, 255);
         private int ColorBurn(int a, int b) => 255 - Divide(255 - a, b);
-        
 
-        public void Blend(IList<Img> images)
-        {  
-            List<Img> masks = images.Clone() as List<Img>;
-            masks.RemoveAll(m => m.blend_data.mode == BlendMode.None);
-
-            ClearResult();
-            if (masks.Count() == 0) return;
-
+        public void DoAction(Img current_img, List<Img> masks)
+        {
             BlendMethod currentMethod;
             for (var i = masks.Count() - 1; i >= 1; i--)
             {
@@ -181,42 +150,8 @@ namespace photomask
                 });
             }
 
-            // mb doesnt need clone
-            //PrevOperationMasks = masks.Clone() as List<Img>;
-
-            // write result
-            int w = masks[0].width;
-            int h = masks[0].height;
-            byte[] colors = new byte[w * h * 4];
-
-            Rectangle rect = new Rectangle(0, 0, w, h);
-            ResultImage = new Bitmap(w, h, PixelFormat.Format32bppArgb);
-            BitmapData bitmapData = ResultImage.LockBits(rect, ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
-            IntPtr Iptr = bitmapData.Scan0;
-
-            Parallel.For(0, w, x =>
-            {
-                for (int y = 0; y < h; y++)
-                {
-                    Pixel pix = masks[0].pixels_matrix[x, y];
-                    byte A = (byte)((masks[0].blend_data.opacity / 100.0f) * (pix.A / 255.0f) * 255);
-
-                    int offset = ((y * w) + x) * 4;
-                    colors[offset] = pix.B;
-                    colors[offset + 1] = pix.G;
-                    colors[offset + 2] = pix.R;
-                    colors[offset + 3] = A;
-                }
-            });
-            Marshal.Copy(colors, 0, Iptr, colors.Length);
-            ResultImage.UnlockBits(bitmapData);
-            
+            next_action?.DoAction(current_img, masks);
         }
 
-        public void Save(string path)
-        {
-            if (ResultImage == null) throw new Exception("Result image is null. You need to call Blend(...)");
-            ResultImage.Save(path);
-        }
     }
 }

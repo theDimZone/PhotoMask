@@ -1,9 +1,10 @@
-﻿<Window x:Class="photomask.MainWindow"
+﻿<Window x:Class="photomask.UI.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:photomask" xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
+        xmlns:local="clr-namespace:photomask.UI"
+        xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
         mc:Ignorable="d"
         Title="PhotoMask" Height="720" Width="1280" SizeToContent="Manual" MinWidth="1280" MinHeight="720" ResizeMode="CanResizeWithGrip" WindowState="Normal">
     <Grid >
@@ -44,15 +45,17 @@
                                 <RowDefinition Height="0.2*"/>
                                 <RowDefinition Height="0.2*"/>
                                 <RowDefinition Height="0.2*"/>
+                                <RowDefinition Height="0.2*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-
+     
                             <Image Grid.Column="0" Grid.Row="0" x:Name="image" Margin="5, 10, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Source="{Binding ImageSource}" />
                             <Button x:Name="buttonUp" Content="▲" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="10,-65,5,0" Click="buttonUp_Click" />
                             <Button x:Name="buttonDown" Content="▼" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="10,-15,5,0"  Click="buttonDown_Click" />
                             <Button x:Name="buttonRemove" Content="✖" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="10,80,5,0" Click="buttonRemove_Click" />
 
 
+                            <!--
                             <Label Grid.Row="1" Grid.ColumnSpan="2" x:Name="label" Content="Opacity:" Height="Auto" Width="Auto" HorizontalAlignment="Left" Margin="0,5,0,0" VerticalAlignment="Center" />
                             <Slider Grid.Row="1" Grid.ColumnSpan="2" x:Name="sliderOpacity" Value="{Binding blend_data.opacity}" Minimum="0" Maximum="100" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,7,27,0" Height="Auto" Width="160" IsSelectionRangeEnabled="True" PreviewMouseUp="slider_Click" />
                             <Label Grid.Row="1" Grid.ColumnSpan="2" x:Name="label1" Content="{Binding blend_data.opacity}" HorizontalAlignment="Right" VerticalAlignment="Center" Height="Auto" Width="Auto" Margin="0,5,0,0" />
@@ -60,7 +63,9 @@
 
                             <Label Grid.Row="2" Grid.ColumnSpan="2" x:Name="label2" Content="Mode:" Height="Auto" Width="Auto" HorizontalAlignment="Left" Margin="0,5,0,0" VerticalAlignment="Center" />
                             <ComboBox Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,5,0" Height="Auto" Width="180" SelectedIndex="{Binding blend_data.mode_view}">
+                            -->
                                 <!-- Order should be same as in Method enum-->
+                            <!--
                                 <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">None</ComboBoxItem>
                                 <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Normal</ComboBoxItem>
                                 <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Jackal</ComboBoxItem>
@@ -93,8 +98,10 @@
                             <CheckBox x:Name="checkBoxKeepAspect" Content="Save aspect ratio" IsChecked="{Binding keep_aspect_ratio}" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="5,5,0,0" Grid.Row="4" VerticalAlignment="Top"/>
 
                             <Button x:Name="buttonResizeOriginal" Content="Return original size" Grid.Column="0" Grid.ColumnSpan="2" Margin="5, 10, 5, 0" Grid.Row="5" Click="buttonResizeOriginal_Click" />
+                             -->
+                            <Button x:Name="buttonActions" Content="Actions" Grid.Column="0" Grid.ColumnSpan="2" Margin="5, 10, 5, 0" Grid.Row="6" Click="buttonActions_Click" />
 
-                            <GridSplitter x:Name="gridSplitter2" Background="#FF9E9E9E" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="2" Grid.Row="6"  IsEnabled="False"/>
+                            <GridSplitter x:Name="gridSplitter2" Background="#FF9E9E9E" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="2" Grid.Row="7"  IsEnabled="False"/>
 
                         </Grid>
                     </DataTemplate>

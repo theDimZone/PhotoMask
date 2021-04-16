@@ -14,6 +14,7 @@ namespace photomask.Image
         private Bitmap bitmap { get; set; }
         //private long Id { get; set; }
         public BlendData blend_data { get; private set; } = new BlendData();
+        public CurvingData curving_data { get; private set; } = new CurvingData();
         public Pixel[,] pixels_matrix { get; set; }
         public bool keep_aspect_ratio { get; set; } = true;
 
@@ -157,17 +158,6 @@ namespace photomask.Image
             IntPtr Iptr = bitmapData.Scan0;
             Marshal.Copy(Iptr, colors, 0, colors.Length);
             
-            /*
-            for (int x = 0; x < width; x++)
-            {
-                for (int y = 0; y < height; y++)
-                {
-                    int offset = ((y * width) + x) * 4;
-                    pixels_matrix[x, y] = new Pixel(colors[offset + 3], colors[offset + 2], colors[offset + 1], colors[offset]);
-                }
-            }
-            */
-
             Parallel.For(0, width, x =>
             {
                 for (int y = 0; y < height; y++)
