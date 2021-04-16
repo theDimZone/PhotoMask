@@ -14,6 +14,7 @@ namespace photomask.Actions
         public void DoAction(Img current_img, List<Img> images)
         {
 
+
             next_action?.DoAction(current_img, images);
         }
     }

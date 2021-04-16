@@ -42,10 +42,6 @@
                                 <RowDefinition Height="1*"/>
                                 <RowDefinition Height="0.2*"/>
                                 <RowDefinition Height="0.2*"/>
-                                <RowDefinition Height="0.2*"/>
-                                <RowDefinition Height="0.2*"/>
-                                <RowDefinition Height="0.2*"/>
-                                <RowDefinition Height="0.2*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
      
@@ -54,54 +50,9 @@
                             <Button x:Name="buttonDown" Content="▼" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="10,-15,5,0"  Click="buttonDown_Click" />
                             <Button x:Name="buttonRemove" Content="✖" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="10,80,5,0" Click="buttonRemove_Click" />
 
+                            <Button x:Name="buttonActions" Content="Actions" Grid.Column="0" Grid.ColumnSpan="2" Margin="5, 10, 5, 0" Grid.Row="1" Click="buttonActions_Click" />
 
-                            <!--
-                            <Label Grid.Row="1" Grid.ColumnSpan="2" x:Name="label" Content="Opacity:" Height="Auto" Width="Auto" HorizontalAlignment="Left" Margin="0,5,0,0" VerticalAlignment="Center" />
-                            <Slider Grid.Row="1" Grid.ColumnSpan="2" x:Name="sliderOpacity" Value="{Binding blend_data.opacity}" Minimum="0" Maximum="100" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,7,27,0" Height="Auto" Width="160" IsSelectionRangeEnabled="True" PreviewMouseUp="slider_Click" />
-                            <Label Grid.Row="1" Grid.ColumnSpan="2" x:Name="label1" Content="{Binding blend_data.opacity}" HorizontalAlignment="Right" VerticalAlignment="Center" Height="Auto" Width="Auto" Margin="0,5,0,0" />
-
-
-                            <Label Grid.Row="2" Grid.ColumnSpan="2" x:Name="label2" Content="Mode:" Height="Auto" Width="Auto" HorizontalAlignment="Left" Margin="0,5,0,0" VerticalAlignment="Center" />
-                            <ComboBox Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,5,0" Height="Auto" Width="180" SelectedIndex="{Binding blend_data.mode_view}">
-                            -->
-                                <!-- Order should be same as in Method enum-->
-                            <!--
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">None</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Normal</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Jackal</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Addition (Linear Dodge)</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Substract</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Multiply</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Divide</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Screen</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Difference</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Overlay</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Exclusion</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Soft Light</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Hard Light</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Vivid Light</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Linear Light</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Pin Light</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Hard Mix</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Darken Only</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Lighten Only</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Color Dodge</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Color Burn</ComboBoxItem>
-                                <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">Linear Burn</ComboBoxItem>
-                            </ComboBox>
-
-                            <Label Grid.Row="3" Grid.Column="0" x:Name="label3" Content="Size:" Height="Auto" Width="60" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Center" />
-                            <TextBox x:Name="textBoxWidth" Grid.Column="0" HorizontalAlignment="Left" Margin="58, 10, 0, 0" Grid.Row="3" Text="{Binding width_view, Mode=OneWay}" TextWrapping="Wrap" VerticalAlignment="Center" Width="50" KeyUp="maskWidth_Changed" />
-                            <TextBox x:Name="textBoxHeight" Grid.Column="0" HorizontalAlignment="Left" Margin="115, 10, 0, 0" Grid.Row="3" Text="{Binding height_view, Mode=OneWay}" TextWrapping="Wrap" VerticalAlignment="Center" Width="50" KeyUp="maskHeight_Changed" />
-                            <Button x:Name="buttonResize" Content="➞" Grid.Column="0" HorizontalAlignment="Left" Margin="172, 10, 0, 0" Grid.Row="3"  VerticalAlignment="Center"  Click="buttonResize_Click" />
-
-                            <CheckBox x:Name="checkBoxKeepAspect" Content="Save aspect ratio" IsChecked="{Binding keep_aspect_ratio}" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="5,5,0,0" Grid.Row="4" VerticalAlignment="Top"/>
-
-                            <Button x:Name="buttonResizeOriginal" Content="Return original size" Grid.Column="0" Grid.ColumnSpan="2" Margin="5, 10, 5, 0" Grid.Row="5" Click="buttonResizeOriginal_Click" />
-                             -->
-                            <Button x:Name="buttonActions" Content="Actions" Grid.Column="0" Grid.ColumnSpan="2" Margin="5, 10, 5, 0" Grid.Row="6" Click="buttonActions_Click" />
-
-                            <GridSplitter x:Name="gridSplitter2" Background="#FF9E9E9E" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="2" Grid.Row="7"  IsEnabled="False"/>
+                            <GridSplitter x:Name="gridSplitter2" Background="#FF9E9E9E" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="2" Grid.Row="2"  IsEnabled="False"/>
 
                         </Grid>
                     </DataTemplate>

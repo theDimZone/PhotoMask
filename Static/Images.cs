@@ -1,4 +1,5 @@
-﻿using photomask.Image;
+﻿using photomask.Actions;
+using photomask.Image;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -40,7 +41,7 @@ namespace photomask.Static
             var time1 = DateTime.Now;
 
             List<Img> images = imgs.Clone() as List<Img>;
-            chain.action.DoAction(current_img, images);
+            chain.first?.DoAction(current_img, images);
 
             var time2 = DateTime.Now;
             

@@ -6,25 +6,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace photomask
+namespace photomask.Actions
 {
     public class ActionsChain
     {
         //public Bitmap result { get; set; }
-        public IAction action { get; set; }
+        public IAction first { get; set; }
 
         public ActionsChain()
         {
-            FirstAction first = new FirstAction();
+            FilterAction filter = new FilterAction();
             CurvingAction curving = new CurvingAction();
             BlendAction blend = new BlendAction();
             WriteAction write = new WriteAction();
 
-            first.next_action = curving;
+            filter.next_action = curving;
             curving.next_action = blend;
             blend.next_action = write;
 
-            action = first;
+            first = filter;
         }
 
 
