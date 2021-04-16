@@ -29,16 +29,19 @@ namespace photomask.UI
 
             InitializeComponent();
 
+            labelTitle.Content = "Blend";
             frame.Navigate(new BlendPage(image));
         }
 
         private void buttonBlend_Click(object sender, RoutedEventArgs e)
         {
+            labelTitle.Content = "Blend";
             frame.Navigate(new BlendPage(image));
         }
 
         private void buttonSize_Click(object sender, RoutedEventArgs e)
         {
+            labelTitle.Content = "Size";
             frame.Navigate(new SizePage(image));
         }
     }

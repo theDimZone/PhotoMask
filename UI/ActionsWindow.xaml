@@ -12,11 +12,16 @@
             <ColumnDefinition Width="27*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="25*" />
+            <RowDefinition Height="375*" />
         </Grid.RowDefinitions>
-        <Frame x:Name="frame" Grid.Column="1" NavigationUIVisibility="Hidden"></Frame>
+        <Label x:Name="labelTitle" Content="Title" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+        <GridSplitter x:Name="gridSplitter2" Background="#FF9E9E9E" Grid.Column="1"  Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="2" Grid.Row="0"  IsEnabled="False"/>
+        
+        <Frame x:Name="frame" Grid.Column="1" NavigationUIVisibility="Hidden" Grid.Row="1"/>
 
-        <Button x:Name="buttonBlend" Content="Blend" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Height="29" Width="105" Click="buttonBlend_Click"/>
-        <Button x:Name="buttonSize" Content="Size" HorizontalAlignment="Center" Margin="0,44,0,0" VerticalAlignment="Top" Height="29" Width="105" Click="buttonSize_Click"/>
+        <Button x:Name="buttonBlend" Grid.Column="0" Content="Blend" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Height="29" Width="105" Click="buttonBlend_Click" Grid.RowSpan="2"/>
+        <Button x:Name="buttonSize" Grid.Column="0"  Content="Size" HorizontalAlignment="Center" Margin="0,44,0,0" VerticalAlignment="Top" Height="29" Width="105" Click="buttonSize_Click" Grid.RowSpan="2"/>
+        <GridSplitter x:Name="gridSplitter" Width="2" Background="#FF9E9E9E" Grid.RowSpan="2" IsEnabled="False" Grid.Column="0" HorizontalAlignment="Right" />
     </Grid>
 </Window>
