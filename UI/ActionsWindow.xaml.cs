@@ -44,5 +44,12 @@ namespace photomask.UI
             labelTitle.Content = "Size";
             frame.Navigate(new SizePage(image));
         }
+
+        private void buttonCurving_Click(object sender, RoutedEventArgs e)
+        {
+            labelTitle.Content = "Curving";
+            frame.Navigate(new CurvingPage(image));
+        }
+
     }
 }

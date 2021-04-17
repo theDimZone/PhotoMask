@@ -15,6 +15,8 @@ namespace photomask.Actions
         {
 
 
+            current_img.curving_data.SetGistoPoints(current_img.pixels_matrix);
+
             next_action?.DoAction(current_img, images);
         }
     }

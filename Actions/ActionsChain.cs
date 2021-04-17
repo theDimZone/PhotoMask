@@ -20,11 +20,12 @@ namespace photomask.Actions
             BlendAction blend = new BlendAction();
             WriteAction write = new WriteAction();
 
-            filter.next_action = curving;
-            curving.next_action = blend;
+            //filter.next_action = curving;
+            curving.next_action = filter;
+            filter.next_action = blend;
             blend.next_action = write;
 
-            first = filter;
+            first = curving;
         }
 
 

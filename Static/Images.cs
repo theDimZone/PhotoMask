@@ -15,6 +15,9 @@ namespace photomask.Static
     {
         public static ObservableCollection<Img> imgs { get; set; } = new ObservableCollection<Img>();
 
+        // WIP
+        //public static List<Img> prev_imgs { get; set; } = new List<Img>();
+
         public static Bitmap result_bitmap { get; set; }
 
         private static ActionsChain chain = new ActionsChain();
@@ -33,6 +36,7 @@ namespace photomask.Static
         public static void Reset()
         {
             ClearResult();
+            //prev_imgs = new List<Img>();
             ResultChanged(0);
         }
 

@@ -17,6 +17,7 @@ namespace photomask.Actions
 
         public void DoAction(Img current_img, List<Img> masks)
         {
+
             // write result
             int w = masks[0].width;
             int h = masks[0].height;
@@ -43,6 +44,10 @@ namespace photomask.Actions
             });
             Marshal.Copy(colors, 0, Iptr, colors.Length);
             Images.result_bitmap.UnlockBits(bitmapData);
+
+            // WIP
+            // mb need save byte a
+            //Images.prev_imgs = masks;
 
             next_action?.DoAction(current_img, masks);
         }

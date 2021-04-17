@@ -16,6 +16,7 @@ namespace photomask.Image
         public BlendData blend_data { get; private set; } = new BlendData();
         public CurvingData curving_data { get; private set; } = new CurvingData();
         public Pixel[,] pixels_matrix { get; set; }
+
         public bool keep_aspect_ratio { get; set; } = true;
 
         private int _height;
@@ -33,6 +34,7 @@ namespace photomask.Image
             height = bitmap.Height;
 
             SetPixelsMatrix(bitmap);
+            //curving_data.SetGistoPoints(pixels_matrix);
         }
 
         public Img() { }
