@@ -6,22 +6,25 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Threading;
+using System.Diagnostics;
 
 namespace photomask.Image
 {
     public enum CurvingChannel
     {
-        RGB,
         R,
         G,
-        B
+        B,
+        RGB
     }
 
-    public class CurvingData
+    public class CurvingData : ICloneable
     {
         public CurvingChannel channel { get; set; } = CurvingChannel.RGB;
 
         public List<Point> points { get; set; } = new List<Point>();
+
+        public int[] interpolated_points { get; set; } = new int[256];
 
         public int[] gisto_points { get; set; } = new int[256];
         public int channel_view
@@ -34,6 +37,34 @@ namespace photomask.Image
         {
             points.Add(new Point(0, 0));
             points.Add(new Point(255, 255));
+            SetInterpolation();
+        }
+
+        // Lagrange interpolation
+        public void SetInterpolation()
+        {
+            double n = points.Count;
+
+            for (int c = 0; c < 256; c++)
+            {
+                double result = 0;
+
+                for (int i = 0; i < n; i++)
+                {
+                    double term = points[i].Y;
+                    for (int j = 0; j < n; j++)
+                    {
+                        if (j != i)
+                            term = term * (c - points[j].X) /
+                                      (points[i].X - points[j].X);
+                    }
+
+                    result += term;
+                }
+
+                int y = (int)Math.Round(result);
+                interpolated_points[c] = Util.Clamp(y, 0, 255);
+            }
         }
 
         public void SetGistoPoints(Pixel[,] pixels_matrix)
@@ -45,6 +76,7 @@ namespace photomask.Image
                 for (int y = 0; y < pixels_matrix.GetLength(1); y++)
                 {
                     int a = 0;
+                    
                     switch(channel)
                     {
                         case CurvingChannel.RGB:
@@ -60,17 +92,28 @@ namespace photomask.Image
                             a = pixels_matrix[x, y].B;
                             break;
                     }
+                    
                     subtotal[a]++;
                 }
                 return subtotal;
             },
                 (arr) =>
                 {
-                    for (int i = 0; i < 255; i++) Interlocked.Add(ref pix_count[i], arr[i]);
+                    for (int i = 0; i < 256; i++) Interlocked.Add(ref pix_count[i], arr[i]);
                 }
             );
 
             gisto_points = pix_count;
+        }
+
+        public object Clone()
+        {
+            CurvingData data = new CurvingData();
+            data.channel = channel;
+            data.gisto_points = gisto_points;
+            data.interpolated_points = interpolated_points;
+            data.points = points;
+            return data;
         }
     }
 }

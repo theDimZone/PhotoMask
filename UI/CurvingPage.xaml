@@ -33,10 +33,15 @@
 
         <ComboBox x:Name="comboBox" Grid.Column="1" HorizontalAlignment="Center" Margin="0,41,0,0" VerticalAlignment="Top" Width="94" Height="24" SelectedIndex="{Binding curving_data.channel_view}">
             <!-- Order should be same as in Channel enum-->
-            <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">RGB</ComboBoxItem>
             <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">R</ComboBoxItem>
             <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">G</ComboBoxItem>
             <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">B</ComboBoxItem>
+            <!--
+            <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">R and G</ComboBoxItem>
+            <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">R and B</ComboBoxItem>
+            <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">G and B</ComboBoxItem>
+            -->
+            <ComboBoxItem PreviewMouseUp="comboBoxItem_Click">RGB</ComboBoxItem>
         </ComboBox>
         <Label x:Name="label" Content="Color channel:" Grid.Column="1" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Height="26" Width="86"/>
 

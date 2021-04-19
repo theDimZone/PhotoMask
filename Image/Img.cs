@@ -12,11 +12,11 @@ namespace photomask.Image
     public class Img : ICloneable
     {
         private Bitmap bitmap { get; set; }
-        //private long Id { get; set; }
+        public long Id { get; private set; }
         public BlendData blend_data { get; private set; } = new BlendData();
         public CurvingData curving_data { get; private set; } = new CurvingData();
         public Pixel[,] pixels_matrix { get; set; }
-
+        //public Pixel[,] operated_pixels_matrix { get; set; }
         public bool keep_aspect_ratio { get; set; } = true;
 
         private int _height;
@@ -28,7 +28,7 @@ namespace photomask.Image
         public Img(string path)
         {
             bitmap = new Bitmap(path);
-            //Id = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+            Id = DateTimeOffset.Now.ToUnixTimeMilliseconds();
 
             width = bitmap.Width;
             height = bitmap.Height;
@@ -98,11 +98,13 @@ namespace photomask.Image
         public object Clone()
         {
             Img mask = new Img();
-            //mask.Id = Id;
+            mask.Id = Id;
             mask.blend_data = blend_data.Clone() as BlendData;
+            mask.curving_data = curving_data.Clone() as CurvingData;
             mask.width = width;
             mask.height = height;
             mask.pixels_matrix = pixels_matrix.Clone() as Pixel[,];
+            //mask.operated_pixels_matrix = operated_pixels_matrix.Clone() as Pixel[,];
             return mask;
         }
 
@@ -170,6 +172,7 @@ namespace photomask.Image
             });
             image.UnlockBits(bitmapData);
 
+            //operated_pixels_matrix = pixels_matrix.Clone() as Pixel[,];
         }
     }
 }
