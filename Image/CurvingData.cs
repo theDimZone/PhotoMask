@@ -49,6 +49,12 @@ namespace photomask.Image
             {
                 double result = 0;
 
+                //if (points[0] == new Point(0, 0) && points[1] == new Point(255, 255))
+                //{
+                //    interpolated_points[c] = c;
+                //    continue;
+                //}
+
                 for (int i = 0; i < n; i++)
                 {
                     double term = points[i].Y;

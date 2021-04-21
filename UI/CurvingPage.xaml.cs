@@ -43,35 +43,28 @@ namespace photomask.UI
             paintSurface.Children.Clear();
             image.curving_data.points.Sort((f, s) => f.X.CompareTo(s.X));
 
+
             if (image.curving_data.points.Count >= 2)
             {
                 image.curving_data.SetInterpolation();
                 Images.Calculate(image);
 
+                DrawGisto();
+
                 Polyline line = new Polyline();
                 line.Stroke = Brushes.Pink;
                 line.StrokeThickness = 2;
                 line.StrokeLineJoin = PenLineJoin.Round;
-                //line.StrokeLineJoin = PenLineJoin.Bevel;
 
-                if (image.curving_data.points[0] == new Point(0, 0) && image.curving_data.points[1] == new Point(255, 255))
-                {
-                    line.Points.Add(ToCanvasPoint(image.curving_data.points[0]));
-                    line.Points.Add(ToCanvasPoint(image.curving_data.points[1]));
-                }
-                else
-                {
-                    Point p;
-                    for (int i = 0; i < 256; i++)
-                    {
-                        p = new Point(i, image.curving_data.interpolated_points[i]);
-                        line.Points.Add(ToCanvasPoint(p));
-                    }
+                Point p_i;    
+                for (int i = 0; i < 256; i++)     
+                {    
+                    p_i = new Point(i, image.curving_data.interpolated_points[i]);
+                    line.Points.Add(ToCanvasPoint(p_i));
                 }
 
                 paintSurface.Children.Add(line);
 
-                DrawGisto();
             }
 
 
@@ -92,6 +85,7 @@ namespace photomask.UI
                 rect.MouseRightButtonDown += Point_MouseRightButtonDown;
                 paintSurface.Children.Add(rect);
             }
+
         }
 
         private void DrawGisto()
@@ -101,7 +95,7 @@ namespace photomask.UI
             int[] pix_count = image.curving_data.gisto_points;
 
             int max = pix_count.Max();
-            double rect_width = gistoSurface.ActualWidth / 255.0d;
+            double rect_width = gistoSurface.ActualWidth / 256.0d;
             double k = gistoSurface.ActualHeight / (max * 1.0d);
 
             for (int i = 0; i < 256; i++)

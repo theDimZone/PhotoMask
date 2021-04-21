@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:photomask.UI"
         mc:Ignorable="d"
-        Title="Actions" Height="450" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" ShowInTaskbar="False">
+        Title="Actions" Height="500" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" ShowInTaskbar="False">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5*" />
@@ -23,6 +23,6 @@
         <GridSplitter x:Name="gridSplitter" Width="2" Background="#FF9E9E9E" Grid.RowSpan="2" IsEnabled="False" Grid.Column="0" HorizontalAlignment="Right" />
         <Button x:Name="buttonBlend" Grid.Column="0" Content="Blend" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Height="29" Width="105" Click="buttonBlend_Click" Grid.RowSpan="2"/>
         <Button x:Name="buttonSize" Grid.Column="0"  Content="Size" HorizontalAlignment="Center" Margin="0,44,0,0" VerticalAlignment="Top" Height="29" Width="105" Click="buttonSize_Click" Grid.RowSpan="2"/>
-        <Button x:Name="buttonCurving" Content="Curving" HorizontalAlignment="Center" Margin="0,51,0,0" Grid.Row="1" VerticalAlignment="Top" Height="29" Width="105" Click="buttonCurving_Click"/>
+        <Button x:Name="buttonCurving" Content="Curves" HorizontalAlignment="Center" Margin="0,48,0,0" Grid.Row="1" VerticalAlignment="Top" Height="29" Width="105" Click="buttonCurving_Click"/>
     </Grid>
 </Window>

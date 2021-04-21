@@ -26,25 +26,22 @@ namespace photomask.Actions
                         int G = images[i].pixels_matrix[x, y].G;
                         int B = images[i].pixels_matrix[x, y].B;
 
-                        if (images[i].curving_data.points[0] != new Point(0, 0) || images[i].curving_data.points[1] != new Point(255, 255))
+                        switch (current_img.curving_data.channel)
                         {
-                            switch (current_img.curving_data.channel)
-                            {
-                                case CurvingChannel.RGB:
-                                    R = images[i].curving_data.interpolated_points[R];
-                                    G = images[i].curving_data.interpolated_points[G];
-                                    B = images[i].curving_data.interpolated_points[B];
-                                    break;
-                                case CurvingChannel.R:
-                                    R = images[i].curving_data.interpolated_points[R];
-                                    break;
-                                case CurvingChannel.G:
-                                    G = images[i].curving_data.interpolated_points[G];
-                                    break;
-                                case CurvingChannel.B:
-                                    B = images[i].curving_data.interpolated_points[B];
-                                    break;
-                            }
+                            case CurvingChannel.RGB:
+                                R = images[i].curving_data.interpolated_points[R];
+                                G = images[i].curving_data.interpolated_points[G];
+                                B = images[i].curving_data.interpolated_points[B];
+                                break;
+                            case CurvingChannel.R:
+                                R = images[i].curving_data.interpolated_points[R];
+                                break;
+                            case CurvingChannel.G:
+                                G = images[i].curving_data.interpolated_points[G];
+                                break;
+                            case CurvingChannel.B:
+                                B = images[i].curving_data.interpolated_points[B];
+                                break;
                         }
 
                         int a = images[i].pixels_matrix[x, y].A;
