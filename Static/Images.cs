@@ -24,7 +24,7 @@ namespace photomask.Static
 
         public static BitmapSource ResultImageSource
         {
-            get => Util.GetImageSource(result_bitmap);
+            get => Util.GetImageSourceResultFormat(result_bitmap);
         }
 
         public delegate void ChangeHandler(double elapsed_time);
@@ -44,7 +44,6 @@ namespace photomask.Static
 
             List<Img> images = imgs.Clone() as List<Img>;
             chain.first?.DoAction(current_img, images);
-            //chain.first?.DoAction(current_img, imgs.ToList());
 
             var time2 = DateTime.Now;
             

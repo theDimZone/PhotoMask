@@ -9,6 +9,7 @@ using System.Windows.Media.Imaging;
 using System.IO;
 using System.Drawing.Imaging;
 using System.Windows.Media;
+using System.Diagnostics;
 
 namespace photomask
 {
@@ -22,15 +23,12 @@ namespace photomask
 
     public static class Util
     {
-
-        /* v1
         // https://stackoverflow.com/questions/1546091/wpf-createbitmapsourcefromhbitmap-memory-leak
         [System.Runtime.InteropServices.DllImport("gdi32.dll")]
         public static extern bool DeleteObject(IntPtr hObject);
                 
-        public static BitmapSource GetImageSource(Bitmap bitmap)
+        public static BitmapSource GetImageSourceAnyFormat(Bitmap bitmap)
         {
-
             if (bitmap == null) return null;
 
             var hBitmap = bitmap.GetHbitmap();
@@ -44,11 +42,11 @@ namespace photomask
 
             return result;
         }
-        */
+        
 
-        // v2
+
         // https://stackoverflow.com/questions/45263691/wpf-bitmapimage-creation-extremely-slow-on-xeon-nvidia-quadro-machine
-        public static BitmapSource GetImageSource(Bitmap bitmap)
+        public static BitmapSource GetImageSourceResultFormat(Bitmap bitmap)
         {
             if (bitmap == null)
                 return null;
@@ -58,29 +56,13 @@ namespace photomask
                 ImageLockMode.ReadOnly, bitmap.PixelFormat);
 
             var bitmapSource = BitmapSource.Create(
-                bitmapData.Width, bitmapData.Height, 96, 96, ConvertPixelFormat(bitmap.PixelFormat), null,
+                bitmapData.Width, bitmapData.Height, 96, 96, PixelFormats.Bgra32, null,
                 bitmapData.Scan0, bitmapData.Stride * bitmapData.Height, bitmapData.Stride);
-
+            
             bitmap.UnlockBits(bitmapData);
             return bitmapSource;
         }
-
-        private static System.Windows.Media.PixelFormat ConvertPixelFormat(System.Drawing.Imaging.PixelFormat sourceFormat)
-        {
-            switch (sourceFormat)
-            {
-                case System.Drawing.Imaging.PixelFormat.Format24bppRgb:
-                    return PixelFormats.Bgr24;
-
-                case System.Drawing.Imaging.PixelFormat.Format32bppArgb:
-                    return PixelFormats.Bgra32;
-
-                case System.Drawing.Imaging.PixelFormat.Format32bppRgb:
-                    return PixelFormats.Bgr32;
-            }
-            return new System.Windows.Media.PixelFormat();
-        }
-
+        
         public static T Clamp<T>(T val, T min, T max) where T : IComparable<T>
         {
             if (val.CompareTo(min) < 0) return min;

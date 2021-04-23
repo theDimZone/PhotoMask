@@ -24,5 +24,6 @@
         <Button x:Name="buttonBlend" Grid.Column="0" Content="Blend" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Height="29" Width="105" Click="buttonBlend_Click" Grid.RowSpan="2"/>
         <Button x:Name="buttonSize" Grid.Column="0"  Content="Size" HorizontalAlignment="Center" Margin="0,44,0,0" VerticalAlignment="Top" Height="29" Width="105" Click="buttonSize_Click" Grid.RowSpan="2"/>
         <Button x:Name="buttonCurving" Content="Curves" HorizontalAlignment="Center" Margin="0,48,0,0" Grid.Row="1" VerticalAlignment="Top" Height="29" Width="105" Click="buttonCurving_Click"/>
+        <Button x:Name="buttonBinarization" Content="Binarization" HorizontalAlignment="Center" Margin="0,82,0,0" Grid.Row="1" VerticalAlignment="Top" Height="29" Width="105" Click="buttonBinarization_Click"/>
     </Grid>
 </Window>

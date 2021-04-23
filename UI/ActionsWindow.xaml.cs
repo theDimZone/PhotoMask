@@ -51,5 +51,10 @@ namespace photomask.UI
             frame.Navigate(new CurvingPage(image));
         }
 
+        private void buttonBinarization_Click(object sender, RoutedEventArgs e)
+        {
+            labelTitle.Content = "Binarization";
+            frame.Navigate(new BinarizationPage(image));
+        }
     }
 }

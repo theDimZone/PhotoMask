@@ -1,0 +1,36 @@
+﻿<Page x:Class="photomask.UI.BinarizationPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:photomask.UI"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="600"
+      Title="BinarizationPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Label x:Name="label" Content="Mode:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="buttonSet" Content="Set" HorizontalAlignment="Left" Margin="135,36,0,0" VerticalAlignment="Top" Height="22" Width="71" Click="buttonSet_Click"/>
+        <StackPanel x:Name="stackPanelInputs" Margin="10,63,345,252" Visibility="Visible"  >
+            <Label x:Name="label1" Content="Window's size:"/>
+            <TextBox x:Name="textBoxSize" Text="{Binding Mode=OneWay, Path=binarization_data.windows_size}" TextWrapping="Wrap" Width="120" HorizontalAlignment="Left"/>
+            <Label x:Name="label2" Content="Parameter:"/>
+            <TextBox x:Name="textBoxParam" Text="{Binding Mode=OneWay, Path=binarization_data.param}" TextWrapping="Wrap" Width="120" HorizontalAlignment="Left"/>
+
+        </StackPanel>
+        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" 
+                  Width="120" SelectionChanged="comboBox_SelectionChanged" SelectedIndex="{Binding Mode=OneWay, Path=binarization_data.mode_view}">
+            <!-- Order should be same as in Channel enum-->
+            <ComboBoxItem>None</ComboBoxItem>
+            <ComboBoxItem>Gavrilov</ComboBoxItem>
+            <ComboBoxItem>Otsu</ComboBoxItem>
+            <!--<ComboBoxItem>Niblack</ComboBoxItem>-->
+        </ComboBox>
+    </Grid>
+</Page>

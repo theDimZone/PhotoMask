@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:photomask.UI"
         xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
         mc:Ignorable="d"
+        UseLayoutRounding="True"
         Title="PhotoMask" Height="720" Width="1280" SizeToContent="Manual" MinWidth="1280" MinHeight="720" ResizeMode="CanResizeWithGrip" WindowState="Normal">
     <Grid >
         <Grid.RowDefinitions>
@@ -23,7 +24,7 @@
                 <ImageBrush TileMode="Tile" ImageSource="/chess.png" ViewportUnits="Absolute" Viewport="0,0,75,75"/>
             </Rectangle.Fill>
         </Rectangle>
-        <Image x:Name="imageMain" Grid.RowSpan="2" Grid.ColumnSpan="2" />
+        <Image x:Name="imageMain" Grid.RowSpan="2" Grid.ColumnSpan="2" RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="Uniform" />
         <GridSplitter x:Name="gridSplitter" Width="2" Background="#FF9E9E9E" Grid.RowSpan="2" IsEnabled="False" Grid.Column="2" HorizontalAlignment="Left" />
         <Button x:Name="buttonUpload" Content="Add image" Grid.Column="2" VerticalAlignment="Top" Margin="10,35,10,0" Click="buttonUpload_Click" />
         <Button x:Name="buttonSave" Content="Save result" Grid.Column="2" VerticalAlignment="Top" Margin="10,10,10,0" IsEnabled="False" Click="buttonSave_Click" />
@@ -44,8 +45,8 @@
                                 <RowDefinition Height="0.2*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-     
-                            <Image Grid.Column="0" Grid.Row="0" x:Name="image" Margin="5, 10, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Source="{Binding ImageSource}" />
+
+                            <Image Grid.Column="0" Grid.Row="0" x:Name="image" Margin="5, 10, 0, 0" RenderOptions.BitmapScalingMode="HighQuality" HorizontalAlignment="Left" VerticalAlignment="Bottom" Source="{Binding ImageSource}" />
                             <Button x:Name="buttonUp" Content="▲" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="10,-65,5,0" Click="buttonUp_Click" />
                             <Button x:Name="buttonDown" Content="▼" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="10,-15,5,0"  Click="buttonDown_Click" />
                             <Button x:Name="buttonRemove" Content="✖" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="10,80,5,0" Click="buttonRemove_Click" />

@@ -10,19 +10,17 @@ namespace photomask.Actions
 {
     public class ActionsChain
     {
-        //public Bitmap result { get; set; }
         public IAction first { get; set; }
 
         public ActionsChain()
         {
-            FilterAction filter = new FilterAction();
             CurvingAction curving = new CurvingAction();
+            BinarizationAction binarization = new BinarizationAction();
             BlendAction blend = new BlendAction();
             WriteAction write = new WriteAction();
 
-            //filter.next_action = curving;
-            curving.next_action = filter;
-            filter.next_action = blend;
+            curving.next_action = binarization;
+            binarization.next_action = blend;
             blend.next_action = write;
 
             first = curving;

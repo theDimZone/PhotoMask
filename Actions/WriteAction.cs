@@ -17,6 +17,12 @@ namespace photomask.Actions
 
         public void DoAction(Img current_img, List<Img> masks)
         {
+            Images.ClearResult();
+            if (masks.Count() == 0)
+            {
+                next_action?.DoAction(current_img, masks);
+                return;
+            }
 
             // write result
             int w = masks[0].width;
