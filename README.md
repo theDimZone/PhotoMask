@@ -1,12 +1,16 @@
 # PhotoMask
-Simple try of copying photoshop blend modes with C# Bitmap
 
 ![Jackal](https://i.imgur.com/xSl8xIl.png)
 
+Supported features:
+* Blend modes (with opacity)
+* Resizing
+* Curves (showing gisto)
+* Binarization
 
 List of featured blend modes:
 * Normal
-* Jackal (on screen above)
+* Jackal (on screen above) 
 * Sum
 * Subtraction
 * Multiply
@@ -26,5 +30,10 @@ List of featured blend modes:
 * Color Dodge
 * Color Burn
 * Linear Burn
+
+List of featured binarization modes:
+* Gavrilov
+* Otsu
+* TODO: more
 
 P.S. Opacity doesn't work with Jackal mode.
