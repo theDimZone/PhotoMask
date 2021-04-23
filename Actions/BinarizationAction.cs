@@ -14,7 +14,7 @@ namespace photomask.Actions
         public IAction next_action { get; set; }
 
         private delegate void BinarizationMethod(Img editing_image);
-        private Dictionary<BinarizationMode, BinarizationMethod> binarization_methods = new();
+        private Dictionary<BinarizationMode, BinarizationMethod> binarization_methods = new Dictionary<BinarizationMode, BinarizationMethod>();
         public BinarizationAction()
         {
             binarization_methods[BinarizationMode.Gavrilov] = Gavrilov;

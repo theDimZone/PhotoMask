@@ -28,7 +28,7 @@ namespace photomask.Image
         public float bradley_param { get; set; } = 0.15f;
         */
         public float param { get; set; } = 0.0f;
-        public Dictionary<BinarizationMode, float> default_params { get; private set; } = new();
+        public Dictionary<BinarizationMode, float> default_params { get; private set; } = new Dictionary<BinarizationMode, float>();
         public int mode_view
         {
             get => (int)mode;
