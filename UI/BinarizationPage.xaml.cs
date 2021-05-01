@@ -56,7 +56,7 @@ namespace photomask.UI
             int mode_index = comboBox.SelectedIndex;
             image.binarization_data.mode_view = mode_index;
             image.binarization_data.windows_size = Convert.ToInt32(textBoxSize.Text);
-            image.binarization_data.param = float.Parse(textBoxParam.Text);
+            image.binarization_data.param = double.Parse(textBoxParam.Text);
 
             Images.Calculate(image);
         }

@@ -30,7 +30,10 @@
             <ComboBoxItem>None</ComboBoxItem>
             <ComboBoxItem>Gavrilov</ComboBoxItem>
             <ComboBoxItem>Otsu</ComboBoxItem>
-            <!--<ComboBoxItem>Niblack</ComboBoxItem>-->
+            <ComboBoxItem>Niblack</ComboBoxItem>
+            <ComboBoxItem>Sauvola</ComboBoxItem>
+            <ComboBoxItem>Wolf</ComboBoxItem>
+            <ComboBoxItem>Bradley</ComboBoxItem>
         </ComboBox>
     </Grid>
 </Page>
