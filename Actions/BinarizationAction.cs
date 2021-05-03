@@ -30,12 +30,12 @@ namespace photomask.Actions
 
         public void DoAction(Img current_img, List<Img> images)
         {
-            for (int i = 0; i < images.Count; i++)
+            Parallel.For(0, images.Count, i =>
             {
-                if (images[i].binarization_data.mode == BinarizationMode.None) continue;
+                if (images[i].binarization_data.mode == BinarizationMode.None) return;
 
                 binarization_methods[images[i].binarization_data.mode](images[i]);
-            }
+            });
 
             next_action?.DoAction(current_img, images);
         }
@@ -228,7 +228,6 @@ namespace photomask.Actions
             });
         }
 
-        private volatile float max_sigma_vol;
         private void Wolf(Img editing_image)
         {
             (int[,] integrated_image, int[,] integrated_pow2, int min) = getIntegratedWithSquareAndMin(editing_image.pixels_matrix);
@@ -241,17 +240,16 @@ namespace photomask.Actions
             var take = buildTakerWindow(integrated_image, w, h, a);
             var takeSquared = buildTakerWindow(integrated_pow2, w, h, a);
 
-            //double max_sigma = 0.0d;
-            max_sigma_vol = 0.0f;
+            double max_sigma = 0.0d;
 
-            Parallel.For <float>(0, w, () => (0.0f), (x, loop, subtotal) =>
+            Parallel.For<double>(0, w, () => (0.0d), (x, loop, subtotal) =>
             {
                 for (int y = 0; y < h; y++)
                 {
                     int M = take(x, y);
                     int M_of_squared = takeSquared(x, y);
                     int D = M_of_squared - (M * M);
-                    float sigma = (float)Math.Sqrt(D);
+                    double sigma = (double)Math.Sqrt(D);
 
                     if (sigma > subtotal) subtotal = sigma;
                 }
@@ -259,12 +257,12 @@ namespace photomask.Actions
             },
                 (t_max) =>
                 {
-                    //if (t_max > max_sigma) Interlocked.Exchange(ref max_sigma, t_max);
-                    if (t_max > max_sigma_vol) max_sigma_vol = t_max;
+                    lock (max_sigma as Object) {
+                        if (t_max > max_sigma) max_sigma = t_max;
+                    }
                 }
             );
 
-            double max_sigma = max_sigma_vol;
             Parallel.For(0, w, x =>
             {
                 for (int y = 0; y < h; y++)
