@@ -56,5 +56,11 @@ namespace photomask.UI
             labelTitle.Content = "Binarization";
             frame.Navigate(new BinarizationPage(image));
         }
+
+        private void buttonFiltering_Click(object sender, RoutedEventArgs e)
+        {
+            labelTitle.Content = "Filtering";
+            frame.Navigate(new FilteringPage(image));
+        }
     }
 }

@@ -73,8 +73,6 @@ namespace photomask.Actions
 
         public void DoAction(Img current_img, List<Img> masks)
         {
-            masks.RemoveAll(m => m.blend_data.mode == BlendMode.None);
-
             BlendMethod currentMethod;
             for (var i = masks.Count() - 1; i >= 1; i--)
             {
