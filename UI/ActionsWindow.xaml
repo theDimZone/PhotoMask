@@ -5,26 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:photomask.UI"
         mc:Ignorable="d"
-        Title="Actions" Height="500" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" ShowInTaskbar="False">
+        Title="Actions" MinHeight="500" Height="710" MinWidth="710" Width="800" WindowStartupLocation="CenterOwner" ShowInTaskbar="False">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5*" />
-            <ColumnDefinition Width="27*"/>
+            <ColumnDefinition Width="120" />
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="25*" />
-            <RowDefinition Height="375*" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        <Label x:Name="labelLogo" Content="PhotoMask" HorizontalAlignment="Center"  VerticalAlignment="Center"/>
         <Label x:Name="labelTitle" Content="Title" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
         <GridSplitter x:Name="gridSplitter2" Background="#FF9E9E9E" Grid.Column="1"  Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="2" Grid.Row="0"  IsEnabled="False"/>
 
         <Frame x:Name="frame" Grid.Column="1" NavigationUIVisibility="Hidden" Grid.Row="1"/>
 
         <GridSplitter x:Name="gridSplitter" Width="2" Background="#FF9E9E9E" Grid.RowSpan="2" IsEnabled="False" Grid.Column="0" HorizontalAlignment="Right" />
-        <Button x:Name="buttonBlend" Grid.Column="0" Content="Blend" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Height="29" Width="105" Click="buttonBlend_Click" Grid.RowSpan="2"/>
-        <Button x:Name="buttonSize" Grid.Column="0"  Content="Size" HorizontalAlignment="Center" Margin="0,44,0,0" VerticalAlignment="Top" Height="29" Width="105" Click="buttonSize_Click" Grid.RowSpan="2"/>
-        <Button x:Name="buttonCurving" Content="Curves" HorizontalAlignment="Center" Margin="0,48,0,0" Grid.Row="1" VerticalAlignment="Top" Height="29" Width="105" Click="buttonCurving_Click"/>
-        <Button x:Name="buttonBinarization" Content="Binarization" HorizontalAlignment="Center" Margin="0,116,0,0" Grid.Row="1" VerticalAlignment="Top" Height="29" Width="105" Click="buttonBinarization_Click"/>
-        <Button x:Name="buttonFiltering" Content="Filtering" HorizontalAlignment="Center" Margin="0,82,0,0" Grid.Row="1" VerticalAlignment="Top" Height="29" Width="105" Click="buttonFiltering_Click"/>
+        <Button x:Name="buttonBlend" Content="Blend" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Height="29" Width="105" Click="buttonBlend_Click" Grid.Row="1"/>
+        <Button x:Name="buttonSize"  Content="Size" HorizontalAlignment="Center" Margin="0,44,0,0" VerticalAlignment="Top" Height="29" Width="105" Click="buttonSize_Click" Grid.Row="1"/>
+        <Button x:Name="buttonCurving" Content="Curves" HorizontalAlignment="Center" Margin="0,78,0,0"  VerticalAlignment="Top" Height="29" Width="105" Click="buttonCurving_Click" Grid.Row="1"/>
+        <Button x:Name="buttonBinarization" Content="Binarization" HorizontalAlignment="Center" Margin="0,146,0,0"  VerticalAlignment="Top" Height="29" Width="105" Click="buttonBinarization_Click" Grid.Row="1"/>
+        <Button x:Name="buttonFiltering" Content="Filtering" HorizontalAlignment="Center" Margin="0,112,0,0" VerticalAlignment="Top" Height="29" Width="105" Click="buttonFiltering_Click" Grid.Row="1"/>
     </Grid>
 </Window>

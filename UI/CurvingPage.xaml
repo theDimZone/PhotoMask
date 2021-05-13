@@ -7,15 +7,16 @@
       mc:Ignorable="d" 
       Loaded="OnPageLoad"
       d:DesignHeight="470" d:DesignWidth="650"
-      Title="CurvingPage">
+      
+      Title="CurvingPage" SizeChanged="Page_SizeChanged">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="31*"></RowDefinition>
             <RowDefinition Height="13*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="21*"></ColumnDefinition>
-            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="130"/>
         </Grid.ColumnDefinitions>
         <GridSplitter x:Name="gridSplitter2" Grid.Row="1" Background="#FF9E9E9E" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="1" IsEnabled="False" Margin="0,1,0,0"  />
         <Canvas Name="paintSurface" Grid.Row="0" Grid.Column="0" MouseMove="Canvas_MouseMove" MouseLeftButtonUp="Canvas_MouseUp">

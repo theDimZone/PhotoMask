@@ -16,8 +16,14 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
-        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="59,12,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.375,0.41"/>
         <Label x:Name="label" Content="Mode:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="buttonSet" Content="Set" Height="22" Width="71" HorizontalAlignment="Left" Margin="135,36,0,0" VerticalAlignment="Top"/>
+        <Grid x:Name="gridLinearInput" Margin="0,58,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="392" Width="600">
+            <TextBox AcceptsReturn="True" VerticalAlignment="Top" HorizontalAlignment="Left" VerticalScrollBarVisibility="Auto" 
+                     HorizontalScrollBarVisibility="Auto" Margin="10,10,0,0" Height="247" Width="550"></TextBox>
+        </Grid>
+
     </Grid>
 
 </Page>

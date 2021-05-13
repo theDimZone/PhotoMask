@@ -35,19 +35,19 @@ namespace photomask.UI
 
         private void OnPageLoad(object sender, RoutedEventArgs e)
         {
-            DrawCurve();
+            DrawCurve(withCalculate: true);
         }
 
-        private void DrawCurve()
+        private void DrawCurve(bool withCalculate)
         {
             paintSurface.Children.Clear();
             image.curving_data.points.Sort((f, s) => f.X.CompareTo(s.X));
 
-
             if (image.curving_data.points.Count >= 2)
             {
                 image.curving_data.SetInterpolation();
-                Images.Calculate(image);
+                
+                if(withCalculate) Images.Calculate(image);
 
                 DrawGisto();
 
@@ -60,7 +60,7 @@ namespace photomask.UI
                 for (int i = 0; i < 256; i++)     
                 {    
                     p_i = new Point(i, image.curving_data.interpolated_points[i]);
-                    line.Points.Add(ToCanvasPoint(p_i));
+                    line.Points.Add(ToCanvasPoint(p_i, paintSurface));
                 }
 
                 paintSurface.Children.Add(line);
@@ -71,7 +71,7 @@ namespace photomask.UI
             // Draw the points.
             foreach (Point point in image.curving_data.points)
             {
-                var p = ToCanvasPoint(point);
+                var p = ToCanvasPoint(point, paintSurface);
 
                 Rectangle rect = new Rectangle();
                 rect.Width = 8;
@@ -98,18 +98,22 @@ namespace photomask.UI
             double rect_width = gistoSurface.ActualWidth / 256.0d;
             double k = gistoSurface.ActualHeight / (max * 1.0d);
 
+            Polygon poly = new Polygon();
+            poly.Fill = Brushes.Black;
+            Canvas.SetLeft(poly, 0);
+            Canvas.SetBottom(poly, 0);
+
+            poly.Points.Add(new Point(0, gistoSurface.ActualHeight));
             for (int i = 0; i < 256; i++)
             {
-                Rectangle rect = new Rectangle();
-                rect.Width = rect_width;
-                rect.Height = k * pix_count[i];
+                double y = Math.Round(gistoSurface.ActualHeight - k * pix_count[i] / gistoSurface.ActualHeight * gistoSurface.ActualHeight);
+                double x = i * rect_width;
+                poly.Points.Add(new Point(x, y));
+                poly.Points.Add(new Point(x + rect_width, y));
 
-                Canvas.SetLeft(rect, i * rect_width);
-                Canvas.SetBottom(rect, 0);
-                rect.Fill = Brushes.Black;
-                rect.StrokeThickness = 0;
-                gistoSurface.Children.Add(rect);
             }
+            poly.Points.Add(new Point(255 * rect_width + rect_width, gistoSurface.ActualHeight));
+            gistoSurface.Children.Add(poly);
         }
 
         private void AddPoint(Point point)
@@ -117,21 +121,21 @@ namespace photomask.UI
             if (image.curving_data.points.Exists(p => p.X == point.X)) return;
 
             image.curving_data.points.Add(point);
-            DrawCurve();
+            DrawCurve(withCalculate: true);
         }
 
-        private Point ToCanvasPoint(Point p)
+        private Point ToCanvasPoint(Point p, Canvas surface)
         {
-            var x = Math.Round(p.X / 255 * paintSurface.ActualWidth);
-            var y = Math.Round(paintSurface.ActualHeight - p.Y / 255 * paintSurface.ActualHeight);
+            var x = Math.Round(p.X / 255 * surface.ActualWidth);
+            var y = Math.Round(surface.ActualHeight - p.Y / 255 * surface.ActualHeight);
 
             return new Point(x, y);
         }
 
-        private Point ToRgbPoint(Point p)
+        private Point ToRgbPoint(Point p, Canvas surface)
         {
-            var x = Math.Round(p.X / paintSurface.ActualWidth * 255);
-            var y = Math.Round(255 - p.Y / paintSurface.ActualHeight * 255);
+            var x = Math.Round(p.X / surface.ActualWidth * 255);
+            var y = Math.Round(255 - p.Y / surface.ActualHeight * 255);
 
             return new Point(x, y);
         }
@@ -151,7 +155,7 @@ namespace photomask.UI
 
         private void Canvas_MouseMove(object sender, MouseEventArgs e)
         {
-            var p = ToRgbPoint(e.GetPosition(paintSurface));
+            var p = ToRgbPoint(e.GetPosition(paintSurface), paintSurface);
 
             labelX.Content = p.X.ToString();
             labelY.Content = p.Y.ToString();
@@ -170,7 +174,7 @@ namespace photomask.UI
         {
             var p = e.GetPosition(paintSurface);
 
-            AddPoint(ToRgbPoint(p));
+            AddPoint(ToRgbPoint(p, paintSurface));
         }
 
 
@@ -180,8 +184,12 @@ namespace photomask.UI
             var point = (Point)rect.DataContext;
             image.curving_data.points.Remove(point);
 
-            DrawCurve();
+            DrawCurve(withCalculate: true);
         }
 
+        private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            DrawCurve(withCalculate: false);
+        }
     }
 }

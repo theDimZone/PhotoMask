@@ -31,6 +31,8 @@ namespace photomask.Actions
 
         private void Linear(Img image)
         {
+            int w_kernel = image.filtering_data.kernel.GetLength(0);
+            int h_kernel = image.filtering_data.kernel.GetLength(1);
 
             Parallel.For(0, image.width, x =>
             {
