@@ -5,7 +5,7 @@
 Supported features:
 * Blend modes (with opacity)
 * Resizing
-* Curves (showing gisto)
+* Curves with color channels (+showing histogram)
 * Binarization
 
 List of featured blend modes:
@@ -34,6 +34,9 @@ List of featured blend modes:
 List of featured binarization modes:
 * Gavrilov
 * Otsu
-* TODO: more
+* Niblack
+* Sauvola
+* Wolf
+* Bradley
 
 P.S. Opacity doesn't work with Jackal mode.
