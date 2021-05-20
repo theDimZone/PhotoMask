@@ -7,7 +7,7 @@
         xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
         mc:Ignorable="d"
         UseLayoutRounding="True"
-        Title="PhotoMask" Height="720" Width="1280" SizeToContent="Manual" MinWidth="1280" MinHeight="720" ResizeMode="CanResizeWithGrip" WindowState="Normal">
+        Title="PhotoMask" Height="720" Width="1280" SizeToContent="Manual" MinWidth="420" MinHeight="420" ResizeMode="CanResizeWithGrip" WindowState="Normal">
     <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
