@@ -16,14 +16,37 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
-        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.375,0.41"/>
-        <Label x:Name="label" Content="Mode:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="buttonSet" Content="Set" Height="22" Width="71" HorizontalAlignment="Left" Margin="135,36,0,0" VerticalAlignment="Top"/>
-        <Grid x:Name="gridLinearInput" Margin="0,58,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="392" Width="600">
-            <TextBox AcceptsReturn="True" VerticalAlignment="Top" HorizontalAlignment="Left" VerticalScrollBarVisibility="Auto" 
-                     HorizontalScrollBarVisibility="Auto" Margin="10,10,0,0" Height="247" Width="550"></TextBox>
+        <StackPanel x:Name="stackPanelMedian" Margin="10,63,295,212">
+            <Label x:Name="label6" Content="Window's radius:"/>
+            <TextBox x:Name="textBoxMedianRadius" Text="{Binding Mode=OneWay, Path=filtering_data.median_radius}" TextWrapping="Wrap" Width="120" HorizontalAlignment="Left"/>
+        </StackPanel>
+
+        <Grid x:Name="gridLinearInput" Margin="0,58,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Hidden">
+            <Label x:Name="label2" Content="Kernel:" HorizontalAlignment="Left" Margin="10,4,0,0" VerticalAlignment="Top"/>
+
+            <Label x:Name="label5" Content="Kernel sum:" HorizontalAlignment="Left" Margin="10,0,0,64" VerticalAlignment="Bottom"/>
+            <Label x:Name="labelKernelSum" Content="0" HorizontalAlignment="Left" Margin="81,0,0,64" VerticalAlignment="Bottom"/>
+
+            <TextBox x:Name="textBoxKernel" AcceptsReturn="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Text="{Binding Mode=OneWay, Path=filtering_data.kernel_view}"
+                     VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="10,30,10,90" TextChanged="textBoxKernel_TextChanged"></TextBox>
+            
+            <Label x:Name="label3" Content="Gaussian matrix coefficients:" HorizontalAlignment="Left" Margin="10,0,0,36" VerticalAlignment="Bottom"/>
+            <TextBox x:Name="textBoxSigmaGauss" HorizontalAlignment="Left" Margin="60,0,0,14" Text="3" TextWrapping="Wrap" Height="18" Width="30" VerticalAlignment="Bottom"/>
+            <Label x:Name="label1" Content="Sigma:" HorizontalAlignment="Left" Margin="10,0,0,10" Width="45" VerticalAlignment="Bottom"/>
+            <Label x:Name="label4" Content="Radius:" HorizontalAlignment="Left" Margin="95,0,0,10" VerticalAlignment="Bottom"/>
+            <TextBox x:Name="textBoxRadiusGauss" HorizontalAlignment="Left" Margin="143,0,0,14" Text="6" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="30"/>
+            <Button x:Name="buttonGenerateGauss" Content="Generate" HorizontalAlignment="Left" Margin="178,0,0,13" VerticalAlignment="Bottom" Click="buttonGenerateGauss_Click"/>
         </Grid>
 
+        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="10,36,0,0" SelectionChanged="comboBox_SelectionChanged"
+                  VerticalAlignment="Top" Width="120" SelectedIndex="{Binding Mode=OneWay, Path=filtering_data.mode_view}">
+            <!-- Order should be same as in Filtering enum-->
+            <ComboBoxItem>None</ComboBoxItem>
+            <ComboBoxItem>Linear</ComboBoxItem>
+            <ComboBoxItem>Median</ComboBoxItem>
+        </ComboBox>
+        <Label x:Name="label" Content="Mode:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="buttonSet" Content="Set" Height="22" Width="71" HorizontalAlignment="Left" Margin="135,36,0,0" VerticalAlignment="Top" Click="buttonSet_Click"/>
     </Grid>
 
 </Page>

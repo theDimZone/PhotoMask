@@ -26,23 +26,22 @@ namespace photomask
         // https://stackoverflow.com/questions/1546091/wpf-createbitmapsourcefromhbitmap-memory-leak
         [System.Runtime.InteropServices.DllImport("gdi32.dll")]
         public static extern bool DeleteObject(IntPtr hObject);
-                
+
         public static BitmapSource GetImageSourceAnyFormat(Bitmap bitmap)
         {
             if (bitmap == null) return null;
 
             var hBitmap = bitmap.GetHbitmap();
             var result = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
-                hBitmap, 
-                IntPtr.Zero, 
-                System.Windows.Int32Rect.Empty, 
+                hBitmap,
+                IntPtr.Zero,
+                System.Windows.Int32Rect.Empty,
                 BitmapSizeOptions.FromEmptyOptions());
 
             DeleteObject(hBitmap);
 
             return result;
         }
-        
 
 
         // https://stackoverflow.com/questions/45263691/wpf-bitmapimage-creation-extremely-slow-on-xeon-nvidia-quadro-machine
@@ -58,11 +57,11 @@ namespace photomask
             var bitmapSource = BitmapSource.Create(
                 bitmapData.Width, bitmapData.Height, 96, 96, PixelFormats.Bgra32, null,
                 bitmapData.Scan0, bitmapData.Stride * bitmapData.Height, bitmapData.Stride);
-            
+
             bitmap.UnlockBits(bitmapData);
             return bitmapSource;
         }
-        
+
         public static T Clamp<T>(T val, T min, T max) where T : IComparable<T>
         {
             if (val.CompareTo(min) < 0) return min;
@@ -74,6 +73,50 @@ namespace photomask
         {
             int i;
             return Int32.TryParse(str, out i) && !str.Contains("-");
+        }
+
+        private static int partition<T>(T[] arr, int left, int right, int pivot_index) where T : IComparable<T>
+        {
+            T pivot_value = arr[pivot_index];
+            (arr[pivot_index], arr[right]) = (arr[right], arr[pivot_index]);
+            int store_index = left;
+            for(int i = left; i < right; i++)
+            {
+                if(arr[i].CompareTo(pivot_value) < 0)
+                {
+                    (arr[store_index], arr[i]) = (arr[i], arr[store_index]);
+                    store_index++;
+                }
+            }
+            (arr[right], arr[store_index]) = (arr[store_index], arr[right]);
+            return store_index;
+        }
+
+        private static T quick_select<T>(T[] arr, int left, int right, int k) where T : IComparable<T>
+        {
+            int pivot_index;
+            Random rand = new Random();
+            while(true)
+            {
+                if (left == right) return arr[left];
+                pivot_index = rand.Next(left, right); // rand between left and right
+                pivot_index = partition(arr, left, right, pivot_index);
+                if(k == pivot_index)
+                {
+                    return arr[k];
+                } else if(k < pivot_index)
+                {
+                    right = pivot_index - 1;
+                } else
+                {
+                    left = pivot_index + 1;
+                }
+            }
+        }
+
+        public static T QuickSelect<T>(T[] arr, int k) where T : IComparable<T>
+        {
+            return quick_select(arr, 0, arr.Length - 1, k);
         }
     }
 }
