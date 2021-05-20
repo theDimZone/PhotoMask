@@ -39,7 +39,7 @@ namespace photomask.Actions
             int r = image.filtering_data.median_radius;
             if (r <= 0) return;
             int side = r * 2 + 1;
-            int mid = side * side / 2;
+            int mid = side * side / 2 - 1;
             Pixel[,] pixels = image.pixels_matrix.Clone() as Pixel[,];
             Parallel.For(0, image.width, x =>
             {
