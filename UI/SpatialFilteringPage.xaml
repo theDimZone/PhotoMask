@@ -18,7 +18,7 @@
 
         <StackPanel x:Name="stackPanelMedian" Margin="10,63,295,212">
             <Label x:Name="label6" Content="Window's radius:"/>
-            <TextBox x:Name="textBoxMedianRadius" Text="{Binding Mode=OneWay, Path=filtering_data.median_radius}" TextWrapping="Wrap" Width="120" HorizontalAlignment="Left"/>
+            <TextBox x:Name="textBoxMedianRadius" Text="{Binding Mode=OneWay, Path=spatial_filtering_data.median_radius}" TextWrapping="Wrap" Width="120" HorizontalAlignment="Left"/>
         </StackPanel>
 
         <Grid x:Name="gridLinearInput" Margin="0,58,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Hidden">
@@ -27,7 +27,7 @@
             <Label x:Name="label5" Content="Kernel sum:" HorizontalAlignment="Left" Margin="10,0,0,64" VerticalAlignment="Bottom"/>
             <Label x:Name="labelKernelSum" Content="0" HorizontalAlignment="Left" Margin="81,0,0,64" VerticalAlignment="Bottom"/>
 
-            <TextBox x:Name="textBoxKernel" AcceptsReturn="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Text="{Binding Mode=OneWay, Path=filtering_data.kernel_view}"
+            <TextBox x:Name="textBoxKernel" AcceptsReturn="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Text="{Binding Mode=OneWay, Path=spatial_filtering_data.kernel_view}"
                      VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="10,30,10,90" TextChanged="textBoxKernel_TextChanged"></TextBox>
             
             <Label x:Name="label3" Content="Gaussian matrix coefficients:" HorizontalAlignment="Left" Margin="10,0,0,36" VerticalAlignment="Bottom"/>
@@ -39,7 +39,7 @@
         </Grid>
 
         <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="10,36,0,0" SelectionChanged="comboBox_SelectionChanged"
-                  VerticalAlignment="Top" Width="120" SelectedIndex="{Binding Mode=OneWay, Path=filtering_data.mode_view}">
+                  VerticalAlignment="Top" Width="120" SelectedIndex="{Binding Mode=OneWay, Path=spatial_filtering_data.mode_view}">
             <!-- Order should be same as in Filtering enum-->
             <ComboBoxItem>None</ComboBoxItem>
             <ComboBoxItem>Linear</ComboBoxItem>

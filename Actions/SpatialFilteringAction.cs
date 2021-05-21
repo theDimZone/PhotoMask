@@ -25,9 +25,9 @@ namespace photomask.Actions
         {
             Parallel.For(0, images.Count, i =>
             {
-                if (images[i].filtering_data.mode == SpatialFilteringMode.None) return;
+                if (images[i].spatial_filtering_data.mode == SpatialFilteringMode.None) return;
 
-                filtering_methods[images[i].filtering_data.mode](images[i]);
+                filtering_methods[images[i].spatial_filtering_data.mode](images[i]);
             });
 
             next_action?.DoAction(current_img, images);
@@ -36,7 +36,7 @@ namespace photomask.Actions
         // works, but slow af.. TODO: boost the speed, mb gpu could help...
         private void Median(Img image)
         {
-            int r = image.filtering_data.median_radius;
+            int r = image.spatial_filtering_data.median_radius;
             if (r <= 0) return;
             int side = r * 2 + 1;
             int mid = side * side / 2 - 1;
@@ -94,8 +94,8 @@ namespace photomask.Actions
 
         private void Linear(Img image)
         {
-            int w_kernel = image.filtering_data.kernel.GetLength(0);
-            int h_kernel = image.filtering_data.kernel.GetLength(1);
+            int w_kernel = image.spatial_filtering_data.kernel.GetLength(0);
+            int h_kernel = image.spatial_filtering_data.kernel.GetLength(1);
             if (w_kernel == 0 || h_kernel == 0) return;
             if (w_kernel % 2 == 0) w_kernel--;
             if (h_kernel % 2 == 0) h_kernel--;
@@ -138,7 +138,7 @@ namespace photomask.Actions
                             }
 
                             Pixel pix = pixels[x_match, y_match];
-                            double k = image.filtering_data.kernel[i + radius_h, j + radius_w];
+                            double k = image.spatial_filtering_data.kernel[i + radius_h, j + radius_w];
                             conv_R += k * pix.R;
                             conv_G += k * pix.G;
                             conv_B += k * pix.B;

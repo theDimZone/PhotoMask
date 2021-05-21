@@ -75,16 +75,16 @@ namespace photomask.UI
             
             if(selected == SpatialFilteringMode.Linear)
             {
-                image.filtering_data.kernel_view = textBoxKernel.Text;
-                image.filtering_data.kernel = stringToMatrix(textBoxKernel.Text);
+                image.spatial_filtering_data.kernel_view = textBoxKernel.Text;
+                image.spatial_filtering_data.kernel = stringToMatrix(textBoxKernel.Text);
 
             } else if(selected == SpatialFilteringMode.Median)
             {
                 // median param
-                image.filtering_data.median_radius = Int32.Parse(textBoxMedianRadius.Text);
+                image.spatial_filtering_data.median_radius = Int32.Parse(textBoxMedianRadius.Text);
             }
 
-            image.filtering_data.mode = selected;
+            image.spatial_filtering_data.mode = selected;
             Images.Calculate(image);
         }
 

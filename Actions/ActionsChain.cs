@@ -15,6 +15,7 @@ namespace photomask.Actions
         // in future mb dynamically create chain for each Img via factory or smth
         public ActionsChain()
         {
+            FrequencyFilteringAction frequency_filtering = new FrequencyFilteringAction();
             CurvingAction curving = new CurvingAction();
             RemoveInvisibleAction remove = new RemoveInvisibleAction();
             SpatialFilteringAction spatial_filtering = new SpatialFilteringAction();
@@ -22,13 +23,14 @@ namespace photomask.Actions
             BlendAction blend = new BlendAction();
             WriteAction write = new WriteAction();
 
+            frequency_filtering.next_action = curving;
             curving.next_action = remove;
             remove.next_action = spatial_filtering;
             spatial_filtering.next_action = binarization;
             binarization.next_action = blend;
             blend.next_action = write;
 
-            first = curving;
+            first = frequency_filtering;
         }
 
 

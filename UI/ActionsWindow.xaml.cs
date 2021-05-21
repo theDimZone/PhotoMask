@@ -62,5 +62,11 @@ namespace photomask.UI
             labelTitle.Content = "Spatial Filtering";
             frame.Navigate(new SpatialFilteringPage(image));
         }
+
+        private void buttonFrequencyFiltering_Click(object sender, RoutedEventArgs e)
+        {
+            labelTitle.Content = "Frequency Filtering";
+            frame.Navigate(new FrequencyFilteringPage(image));
+        }
     }
 }
