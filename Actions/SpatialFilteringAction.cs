@@ -8,24 +8,24 @@ using System.Threading.Tasks;
 
 namespace photomask.Actions
 {
-    public class FilteringAction : IAction
+    public class SpatialFilteringAction : IAction
     {
         public IAction next_action { get; set; }
 
         private delegate void FilteringMethod(Img editing_image);
-        private Dictionary<FilteringMode, FilteringMethod> filtering_methods = new Dictionary<FilteringMode, FilteringMethod>();
+        private Dictionary<SpatialFilteringMode, FilteringMethod> filtering_methods = new Dictionary<SpatialFilteringMode, FilteringMethod>();
         
-        public FilteringAction()
+        public SpatialFilteringAction()
         {
-            filtering_methods[FilteringMode.Linear] = Linear;
-            filtering_methods[FilteringMode.Median] = Median;
+            filtering_methods[SpatialFilteringMode.Linear] = Linear;
+            filtering_methods[SpatialFilteringMode.Median] = Median;
         }
 
         public void DoAction(Img current_img, List<Img> images)
         {
             Parallel.For(0, images.Count, i =>
             {
-                if (images[i].filtering_data.mode == FilteringMode.None) return;
+                if (images[i].filtering_data.mode == SpatialFilteringMode.None) return;
 
                 filtering_methods[images[i].filtering_data.mode](images[i]);
             });

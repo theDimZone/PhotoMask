@@ -16,7 +16,7 @@ namespace photomask.Image
         public long Id { get; private set; }
         public BlendData blend_data { get; private set; } = new BlendData();
         public CurvingData curving_data { get; private set; } = new CurvingData();
-        public FilteringData filtering_data { get; private set; } = new FilteringData();
+        public SpatialFilteringData filtering_data { get; private set; } = new SpatialFilteringData();
         public BinarizationData binarization_data { get; private set; } = new BinarizationData();
         public Pixel[,] pixels_matrix { get; set; }
         //public Pixel[,] operated_pixels_matrix { get; set; }
@@ -100,7 +100,7 @@ namespace photomask.Image
             mask.Id = Id;
             mask.blend_data = blend_data.Clone() as BlendData;
             mask.curving_data = curving_data.Clone() as CurvingData;
-            mask.filtering_data = filtering_data.Clone() as FilteringData;
+            mask.filtering_data = filtering_data.Clone() as SpatialFilteringData;
             mask.binarization_data = binarization_data.Clone() as BinarizationData;
             mask.width = width;
             mask.height = height;

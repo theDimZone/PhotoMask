@@ -19,13 +19,13 @@ using System.Windows.Shapes;
 namespace photomask.UI
 {
     /// <summary>
-    /// Логика взаимодействия для FilteringPage.xaml
+    /// Логика взаимодействия для SpatialFilteringPage.xaml
     /// </summary>
-    public partial class FilteringPage : Page
+    public partial class SpatialFilteringPage : Page
     {
         public Img image { get; set; }
 
-        public FilteringPage(Img image)
+        public SpatialFilteringPage(Img image)
         {
             this.image = image;
             this.DataContext = this.image;
@@ -71,14 +71,14 @@ namespace photomask.UI
 
         private void buttonSet_Click(object sender, RoutedEventArgs e)
         {
-            FilteringMode selected = (FilteringMode)comboBox.SelectedIndex;
+            SpatialFilteringMode selected = (SpatialFilteringMode)comboBox.SelectedIndex;
             
-            if(selected == FilteringMode.Linear)
+            if(selected == SpatialFilteringMode.Linear)
             {
                 image.filtering_data.kernel_view = textBoxKernel.Text;
                 image.filtering_data.kernel = stringToMatrix(textBoxKernel.Text);
 
-            } else if(selected == FilteringMode.Median)
+            } else if(selected == SpatialFilteringMode.Median)
             {
                 // median param
                 image.filtering_data.median_radius = Int32.Parse(textBoxMedianRadius.Text);
@@ -90,12 +90,12 @@ namespace photomask.UI
 
         private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            FilteringMode selected = (FilteringMode)comboBox.SelectedIndex;
-            if (selected == FilteringMode.Linear)
+            SpatialFilteringMode selected = (SpatialFilteringMode)comboBox.SelectedIndex;
+            if (selected == SpatialFilteringMode.Linear)
             {
                 gridLinearInput.Visibility = Visibility.Visible;
                 stackPanelMedian.Visibility = Visibility.Hidden;
-            } else if(selected == FilteringMode.Median)
+            } else if(selected == SpatialFilteringMode.Median)
             {
                 gridLinearInput.Visibility = Visibility.Hidden;
                 stackPanelMedian.Visibility = Visibility.Visible;

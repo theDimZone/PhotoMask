@@ -26,6 +26,6 @@
         <Button x:Name="buttonSize"  Content="Size" HorizontalAlignment="Center" Margin="0,44,0,0" VerticalAlignment="Top" Height="29" Width="105" Click="buttonSize_Click" Grid.Row="1"/>
         <Button x:Name="buttonCurving" Content="Curves" HorizontalAlignment="Center" Margin="0,78,0,0"  VerticalAlignment="Top" Height="29" Width="105" Click="buttonCurving_Click" Grid.Row="1"/>
         <Button x:Name="buttonBinarization" Content="Binarization" HorizontalAlignment="Center" Margin="0,146,0,0"  VerticalAlignment="Top" Height="29" Width="105" Click="buttonBinarization_Click" Grid.Row="1"/>
-        <Button x:Name="buttonFiltering" Content="Filtering" HorizontalAlignment="Center" Margin="0,112,0,0" VerticalAlignment="Top" Height="29" Width="105" Click="buttonFiltering_Click" Grid.Row="1"/>
+        <Button x:Name="buttonSpatialFiltering" Content="Spatial Filtering" HorizontalAlignment="Center" Margin="0,112,0,0" VerticalAlignment="Top" Height="29" Width="105" Click="buttonSpatialFiltering_Click" Grid.Row="1"/>
     </Grid>
 </Window>

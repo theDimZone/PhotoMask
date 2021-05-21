@@ -57,10 +57,10 @@ namespace photomask.UI
             frame.Navigate(new BinarizationPage(image));
         }
 
-        private void buttonFiltering_Click(object sender, RoutedEventArgs e)
+        private void buttonSpatialFiltering_Click(object sender, RoutedEventArgs e)
         {
-            labelTitle.Content = "Filtering";
-            frame.Navigate(new FilteringPage(image));
+            labelTitle.Content = "Spatial Filtering";
+            frame.Navigate(new SpatialFilteringPage(image));
         }
     }
 }
