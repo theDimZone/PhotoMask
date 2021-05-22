@@ -99,7 +99,7 @@ namespace photomask
             while(true)
             {
                 if (left == right) return arr[left];
-                pivot_index = rand.Next(left, right); // rand between left and right
+                pivot_index = rand.Next(left, right + 1); // rand between left and right
                 pivot_index = partition(arr, left, right, pivot_index);
                 if(k == pivot_index)
                 {
