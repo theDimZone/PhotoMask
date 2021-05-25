@@ -6,6 +6,8 @@
       xmlns:local="clr-namespace:photomask.UI"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
+      SizeChanged="Page_SizeChanged"
+      Loaded="OnPageLoad"
       Title="FrequencyFilteringPage">
 
     <Grid>
@@ -15,5 +17,74 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
+
+        <Grid Visibility="Visible" x:Name="gridGenerate" HorizontalAlignment="Left" VerticalAlignment="Top" Height="155" Width="265">
+            <Button x:Name="buttonGenerate" Content="Generate Fourier spectrum" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="150" Click="buttonGenerate_Click"/>
+            <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,35,0,0" 
+                       Text="Caution: Spectrum will be reseted after resize of image" TextWrapping="Wrap" VerticalAlignment="Top" Width="150"/>
+            <TextBlock x:Name="textBlock8" HorizontalAlignment="Left" Margin="10,88,0,0" TextWrapping="Wrap" 
+                       Text="Advice: To get rid of distortion you need to resize image to radix-2 sizes" VerticalAlignment="Top" Width="150"/>
+        </Grid>
+        <Grid Visibility="Hidden" x:Name="gridFourier">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="170"></ColumnDefinition>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <!--
+            <Viewbox Stretch="Uniform">
+                <Canvas x:Name="canvasFourier" Background="DarkSeaGreen">
+                    <Canvas.LayoutTransform>
+                        <ScaleTransform ScaleY="-1" />
+                    </Canvas.LayoutTransform>
+                </Canvas>
+            </Viewbox>
+            -->
+            <Image x:Name="imageFourier" Margin="0,0,1,1" Grid.Column="1" RenderOptions.BitmapScalingMode="NearestNeighbor" 
+                   LayoutUpdated="imageUpdated" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top" />
+            <Canvas x:Name="canvasFourier" VerticalAlignment="Top" HorizontalAlignment="Left" ClipToBounds="True"
+                    Grid.Column="1" Width="100" Height="100" MouseMove="Canvas_MouseMove" LayoutUpdated="canvasUpdated">
+                <Canvas.Background>
+                    <SolidColorBrush Color="Transparent" Opacity="100"/>
+                </Canvas.Background>
+            </Canvas>
+            <GridSplitter HorizontalAlignment="Right" Width="1" Background="#FF9E9E9E" IsEnabled="False" Margin="0,0,1,0" />
+
+            <TextBlock x:Name="textBlock5" HorizontalAlignment="Left" Margin="10,38,0,0"
+                       Text="Filter area:" TextWrapping="Wrap" VerticalAlignment="Top"/>
+            <TextBox x:Name="textBoxFilterArea" HorizontalAlignment="Center" Margin="0,59,0,0" AcceptsReturn="True"
+                     Text="{Binding Mode=OneWay, Path=frequency_filtering_data.circles_view}" TextChanged="textBoxFilterArea_TextChanged"
+                     VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Height="75"/>
+            <Label x:Name="label1" 
+                   Content="Format of input: X;Y;R1;R2" HorizontalAlignment="Center" Margin="0,134,0,0" VerticalAlignment="Top" Width="148" Height="26"/>
+            <TextBlock x:Name="textBlock1" HorizontalAlignment="Center" Margin="0,165,0,0" 
+                       Text="X,Y - coordinates of circle (relative to center)." 
+                       TextWrapping="Wrap" VerticalAlignment="Top" Height="33" Width="150"/>
+            <TextBlock x:Name="textBlock2" Margin="10,203,0,0" 
+                       Text="R1 - inner circle radius." TextWrapping="Wrap" VerticalAlignment="Top" Height="16" HorizontalAlignment="Left" Width="121"/>
+            <TextBlock x:Name="textBlock3" HorizontalAlignment="Left" Margin="10,224,0,0" 
+                       Text="R2 - outer circle radius." TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="126"/>
+            <TextBlock x:Name="textBlock4" HorizontalAlignment="Left" Margin="10,245,0,0" 
+                       Text="Each line is a new circle." TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="126"/>
+
+            <TextBlock x:Name="textBlock6" HorizontalAlignment="Left" Margin="10,287,0,0" Text="Multipliers:" TextWrapping="Wrap" VerticalAlignment="Top"/>
+            <Label x:Name="label" Content="R1 &lt; x &lt; R2" HorizontalAlignment="Left" Margin="10,308,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="textBoxCondInner" HorizontalAlignment="Left" Margin="89,312,0,0" 
+                     Text="{Binding Mode=OneWay, Path=frequency_filtering_data.inner_multiplier}" TextWrapping="Wrap" VerticalAlignment="Top" Width="71"/>
+            <Label x:Name="label2" Content="x &lt; R1 || x > R2" HorizontalAlignment="Left" Margin="10,335,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="textBoxContRest" HorizontalAlignment="Left" Margin="105,339,0,0" 
+                     Text="{Binding Mode=OneWay, Path=frequency_filtering_data.rest_multiplier}" TextWrapping="Wrap" VerticalAlignment="Top" Width="55"/>
+
+            <TextBlock x:Name="textBlock7" HorizontalAlignment="Left" Margin="10,381,0,0" Text="Mode:" TextWrapping="Wrap" VerticalAlignment="Top"/>
+            <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="49,378,0,0" VerticalAlignment="Top" 
+                      SelectedIndex="{Binding Mode=OneWay, Path=frequency_filtering_data.mode_view}" Width="111">
+                <ComboBoxItem>None</ComboBoxItem>
+                <ComboBoxItem>Ideal</ComboBoxItem>
+            </ComboBox>
+            <Button x:Name="buttonSet" Content="Set" HorizontalAlignment="Center" Margin="0,405,0,0" VerticalAlignment="Top" Width="150" Click="buttonSet_Click"/>
+
+            <Label x:Name="label3" Content="Cursor:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="labelCursor" Content="0;0" HorizontalAlignment="Left" Margin="62,10,0,0" VerticalAlignment="Top"/>
+
+        </Grid>
     </Grid>
 </Page>

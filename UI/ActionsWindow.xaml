@@ -28,6 +28,14 @@
         <Button x:Name="buttonBinarization" Content="Binarization" HorizontalAlignment="Center" Margin="0,180,0,0"  VerticalAlignment="Top" Height="29" Width="105" Click="buttonBinarization_Click" Grid.Row="1"/>
         <Button x:Name="buttonSpatialFiltering" Content="Spatial Filtering" HorizontalAlignment="Center" Margin="0,112,0,0" VerticalAlignment="Top" Height="29" Width="105" Click="buttonSpatialFiltering_Click" Grid.Row="1"/>
         <Button x:Name="buttonFrequencyFiltering" Content="Frequency Filtering" HorizontalAlignment="Center" Margin="0,146,0,0" VerticalAlignment="Top" Height="29" Width="105" Click="buttonFrequencyFiltering_Click" Grid.Row="1"/>
+        <StackPanel Grid.Row="1" Margin="10,0,0,10" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="115" Width="100">
+            <TextBlock x:Name="textBlock" Text="Order of actions:" TextWrapping="Wrap"/>
+            <TextBlock x:Name="textBlock1" Text="1. Frequency Filtering" TextWrapping="Wrap"/>
+            <TextBlock x:Name="textBlock2" Text="2. Curves" TextWrapping="Wrap"/>
+            <TextBlock x:Name="textBlock3" Text="3. Spatial filtering" TextWrapping="Wrap"/>
+            <TextBlock x:Name="textBlock4" Text="4. Binarization" TextWrapping="Wrap"/>
+            <TextBlock x:Name="textBlock5" Text="5. Blend" TextWrapping="Wrap"/>
+        </StackPanel>
 
     </Grid>
 </Window>

@@ -9,5 +9,10 @@
 
         public Pixel(byte a, byte r, byte g, byte b) => (A, R, G, B) = (a, r, g, b);
         public Pixel(int a, int r, int g, int b) => (A, R, G, B) = ((byte)a, (byte)r, (byte)g, (byte)b);
+
+        public int[] ToArray()
+        {
+            return new int[4] { B, G, R, A };
+        }
     }
 }

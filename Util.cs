@@ -10,6 +10,7 @@ using System.IO;
 using System.Drawing.Imaging;
 using System.Windows.Media;
 using System.Diagnostics;
+using System.Numerics;
 
 namespace photomask
 {
@@ -117,6 +118,38 @@ namespace photomask
         public static T QuickSelect<T>(T[] arr, int k) where T : IComparable<T>
         {
             return quick_select(arr, 0, arr.Length - 1, k);
+        }
+
+        // radix-2 Cooley-Turkey https://en.wikipedia.org/wiki/Cooley%E2%80%93Tukey_FFT_algorithm
+        public static Complex[] ditfft2(Complex[] vec, int N, int s = 1, int mul = 1)
+        {
+            Complex[] X = new Complex[N];
+
+            if(N == 1)
+            {
+                //X[0] = new Complex(vec[0], 0);
+                X[0] = vec[0];
+            } else
+            {
+                //X[0..(N / 2 - 1)]
+                //ditfft2_int(vec, N / 2, 2 * s);
+                Complex[] vec1 = vec.Where((com, i) => i % 2 == 0).ToArray();
+                Complex[] vec2 = vec.Where((com, i) => i % 2 != 0).ToArray();
+
+                Array.Copy(ditfft2(vec1, N / 2, 2 * s, mul), 0, X, 0, N / 2); 
+                Array.Copy(ditfft2(vec2, N / 2, 2 * s, mul), 0, X, N / 2, N / 2);
+
+                for (int k = 0; k < N / 2; k++)
+                {
+                    Complex p = X[k];
+                    double a = mul * -2.0d * Math.PI / N * k;
+                    Complex q = new Complex(Math.Cos(a), Math.Sin(a)) * X[k + N / 2];
+                    X[k] = p + q;
+                    X[k + N / 2] = p - q;
+                }
+            }
+
+            return X;
         }
     }
 }
