@@ -55,11 +55,17 @@ namespace photomask.Image
             fourier_spectrum = null;
             fourier_image?.Dispose();
             fourier_image = null;
+            fourier_height = 0;
+            fourier_width = 0;
+            old_width = 0;
+            old_height = 0;
             mode = FrequencyFilteringMode.None;
         }
 
         public void GenerateSpectrum(Pixel[,] pixels)
         {
+            ClearFourier();
+
             int width = pixels.GetLength(0);
             int height = pixels.GetLength(1);
             old_width = width;
@@ -69,7 +75,6 @@ namespace photomask.Image
             fourier_height = (int)Math.Pow(2, Math.Ceiling(Math.Log2(height)));
 
             // jagged 
-            ClearFourier();
             fourier_spectrum = new Complex[3][][];
 
             byte[] colors = new byte[fourier_width * fourier_height * 3];

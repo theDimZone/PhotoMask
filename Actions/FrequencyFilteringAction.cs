@@ -15,16 +15,25 @@ namespace photomask.Actions
 
         public void DoAction(Img current_img, List<Img> images)
         {
+            if (current_img.frequency_filtering_data.old_height != current_img.pixels_matrix.GetLength(1)
+                 || current_img.frequency_filtering_data.old_width != current_img.pixels_matrix.GetLength(0))
+            {
+                current_img.frequency_filtering_data.ClearFourier();
+                images.Find(i => i.Id == current_img.Id).frequency_filtering_data.ClearFourier();
+            }
+
             Parallel.For(0, images.Count, i =>
             {
                 if (images[i].frequency_filtering_data.mode == FrequencyFilteringMode.None) return;
 
+                /*
                 if (images[i].frequency_filtering_data.old_height != images[i].pixels_matrix.GetLength(1)
                  || images[i].frequency_filtering_data.old_width != images[i].pixels_matrix.GetLength(0))
                 {
                     images[i].frequency_filtering_data.ClearFourier();
                     return;
                 }
+                */
 
                 Filter(images[i]);
             });

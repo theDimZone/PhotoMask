@@ -51,8 +51,11 @@ namespace photomask.UI
 
         private void SetOriginals()
         {
-            original_height = image.frequency_filtering_data.fourier_image.Height;
-            original_width = image.frequency_filtering_data.fourier_image.Width;
+            if (image.frequency_filtering_data.fourier_image != null)
+            {
+                original_height = image.frequency_filtering_data.fourier_image.Height;
+                original_width = image.frequency_filtering_data.fourier_image.Width;
+            }
         }
 
         private double try_parse(string s)
@@ -66,6 +69,7 @@ namespace photomask.UI
         {
             if(image.frequency_filtering_data.fourier_image != null)
             {
+                /*
                 if (image.frequency_filtering_data.old_height != image.pixels_matrix.GetLength(1)
                     || image.frequency_filtering_data.old_width != image.pixels_matrix.GetLength(0))
                 {
@@ -77,6 +81,10 @@ namespace photomask.UI
                     gridGenerate.Visibility = Visibility.Hidden;
                     gridFourier.Visibility = Visibility.Visible;
                 }
+                */
+                imageFourier.Source = Util.GetImageSourceAnyFormat(image.frequency_filtering_data.fourier_image);
+                gridGenerate.Visibility = Visibility.Hidden;
+                gridFourier.Visibility = Visibility.Visible;
             } 
         }
 
@@ -130,6 +138,8 @@ namespace photomask.UI
 
         private void drawCircles()
         {
+            if (image.frequency_filtering_data.fourier_image == null) return;
+
             canvasFourier.Children.Clear();
             double mul = canvasFourier.ActualHeight / original_height;
 
@@ -137,7 +147,6 @@ namespace photomask.UI
             {
                 for(int i = 3; i >= 2; i--)
                 {
-                    
                     Ellipse c = new Ellipse();
                     double r = line[i] * mul;
                     c.Width = r * 2;
