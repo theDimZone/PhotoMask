@@ -7,6 +7,8 @@ Supported features:
 * Resizing
 * Curves with color channels (+showing histogram)
 * Binarization
+* Spatial filtering (linear and median)
+* Frequency filtering (only ideal mode for now; TODO: more modes)
 
 List of featured blend modes:
 * Normal
